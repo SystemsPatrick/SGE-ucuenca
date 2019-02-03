@@ -385,13 +385,15 @@ public class Operaciones_OracleBD {
 
     //============================================================================
     //Terminado VER HR y Clave
-    public void metaDatoTablas(javax.swing.JComboBox<String> aux_comBox) {
+    public List<String> metaDatoTablas() {
+        List<String> aux_lista = null;
         // Colocar en el Mapa (Inicializo)
         mapaTablas = new HashMap<String, ArrayList<String>>();
         //Inicio de Metadato - Tablas
 //        cn = con.Conectar(jframe_inicioEncuesta.getjTextField_usuario(), jframe_inicioEncuesta.getjTextField_contraseña()); // "HR", "1234" //"usuario_jhon", "1234"
         DatabaseMetaData metaDatos;
         try {
+            aux_lista = new ArrayList<String>();
             metaDatos = cn.getMetaData();
             ResultSet rs = metaDatos.getTables(null, jframe_STARTEncuesta.getjTextField_usuario().toUpperCase()/*PONER MAYUSCULA*/, "%", null); // null, "HR"/*PONER MAYUSCULA*/, "%", null // null, "USUARIO_JHON"/*PONER MAYUSCULA*/, "%", null
 
@@ -405,8 +407,7 @@ public class Operaciones_OracleBD {
                     mapaTablas.put(nombre_tabla, null);
 
                     // Colocar en el combo box
-                    aux_comBox.addItem(nombre_tabla);
-                    aux_comBox.repaint();
+                    aux_lista.add(nombre_tabla);
                 }
             }
         } catch (SQLException ex) {
@@ -418,7 +419,7 @@ public class Operaciones_OracleBD {
                 System.out.println("\n=====================\n\nERROR: " + ex + "\n=====================\n");
             }
         }
-
+        return aux_lista;
     }
 
     //Terminado VER HR y Clave
