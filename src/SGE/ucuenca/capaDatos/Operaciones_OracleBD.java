@@ -88,7 +88,7 @@ public class Operaciones_OracleBD {
                 System.out.println("SIGNOS: " + stringSignosPregunta);
                 System.out.println("\n======== VALORES A GUARDAR ========");
 
-                pst = cn.prepareStatement("INSERT INTO " + objeto.getClass().getSimpleName().toUpperCase() + " VALUES (" + stringSignosPregunta + ") ");
+                pst = cn.prepareStatement("INSERT INTO USUARIO_ADMIN1." + objeto.getClass().getSimpleName().toUpperCase() + " VALUES (" + stringSignosPregunta + ") ");
                 for (int i = 0; i < campos.length; i++) {
                     String fieldName = campos[i].getName();
                     System.out.println("Nombre Campo: " + fieldName.toUpperCase());
@@ -180,8 +180,8 @@ public class Operaciones_OracleBD {
                 System.out.println("CAMPOS: " + stringCamposSignos);
                 System.out.println("\n======== VALORES A ELIMINAR ========");
 
-                pst = cn.prepareStatement("DELETE FROM " + objeto.getClass().getSimpleName().toUpperCase() + " WHERE " + stringCamposSignos);
-                System.out.println("DELETE FROM " + objeto.getClass().getSimpleName().toUpperCase() + " WHERE " + stringCamposSignos);
+                pst = cn.prepareStatement("DELETE FROM USUARIO_ADMIN1." + objeto.getClass().getSimpleName().toUpperCase() + " WHERE " + stringCamposSignos);
+                System.out.println("DELETE FROM USUARIO_ADMIN1." + objeto.getClass().getSimpleName().toUpperCase() + " WHERE " + stringCamposSignos);
                 Integer iteradorString = 0;
                 for (int i = 0; i < campos.length; i++) {
                     //Compara para identificar el campo clave para modificar
@@ -297,8 +297,8 @@ public class Operaciones_OracleBD {
 //                System.out.println("CONDICION: " + stringCamposSignosCondicion);
                 System.out.println("\n======== VALORES A ACTUALIZAR ========");
 
-                pst = cn.prepareStatement("UPDATE " + objeto.getClass().getSimpleName().toUpperCase() + " SET " + stringCamposSignos + " WHERE " + stringCamposSignosCondicion);
-                System.out.println("UPDATE " + objeto.getClass().getSimpleName().toUpperCase() + " SET " + stringCamposSignos + " WHERE " + stringCamposSignosCondicion);
+                pst = cn.prepareStatement("UPDATE USUARIO_ADMIN1." + objeto.getClass().getSimpleName().toUpperCase() + " SET " + stringCamposSignos + " WHERE " + stringCamposSignosCondicion);
+                System.out.println("UPDATE USUARIO_ADMIN1." + objeto.getClass().getSimpleName().toUpperCase() + " SET " + stringCamposSignos + " WHERE " + stringCamposSignosCondicion);
                 iteradorString = 0;
                 for (int i = 0; i < campos.length; i++) {
                     //Compara para identificar el campo clave para modificar
