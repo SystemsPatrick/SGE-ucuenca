@@ -59,7 +59,6 @@ public class jframe_ManejoUsuario extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jButton_guardarRegistro = new javax.swing.JButton();
         jButton_cancelar = new javax.swing.JButton();
-        jTextField_telefono_usuario4 = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
@@ -188,11 +187,6 @@ public class jframe_ManejoUsuario extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton_cancelar)))
                 .addContainerGap(24, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addGap(65, 65, 65)
-                    .addComponent(jTextField_telefono_usuario4)
-                    .addGap(65, 65, 65)))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -204,11 +198,6 @@ public class jframe_ManejoUsuario extends javax.swing.JFrame {
                     .addComponent(jButton_guardarRegistro)
                     .addComponent(jButton_cancelar))
                 .addContainerGap())
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addGap(111, 111, 111)
-                    .addComponent(jTextField_telefono_usuario4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(121, Short.MAX_VALUE)))
         );
 
         jButton_.addTab("Ingreso Usuario", jPanel2);
@@ -496,7 +485,7 @@ public class jframe_ManejoUsuario extends javax.swing.JFrame {
     private void jButton_guardarRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_guardarRegistroActionPerformed
         
         Object objUsuario = new Usuario(
-                ClaseValidacion.getNumero(jTextField_cod_usuario1.getText()),
+                jTextField_cod_usuario1.getText(),
                 jTextField_nombre_usuario1.getText(),
                 jTextField_direccion_usuario1.getText(),
                 jTextField_telefono_usuario1.getText(),
@@ -525,7 +514,7 @@ public class jframe_ManejoUsuario extends javax.swing.JFrame {
     private void jButton_eliminarRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_eliminarRegistroActionPerformed
         
         Object objUsuario = new Usuario(
-                ClaseValidacion.getNumero(jTextField_cod_usuario3.getText()),
+                jTextField_cod_usuario3.getText(),
                 jTextField_nombre_usuario3.getText(),
                 jTextField_direccion_usuario3.getText(),
                 jTextField_telefono_usuario3.getText(),
@@ -566,7 +555,7 @@ public class jframe_ManejoUsuario extends javax.swing.JFrame {
         
         //Usuario
         Object objUsuario = new Usuario(
-                ClaseValidacion.getNumero(jTextField_cod_usuario2.getText()),
+                jTextField_cod_usuario2.getText(),
                 jTextField_nombre_usuario2.getText(),
                 jTextField_direccion_usuario2.getText(),
                 jTextField_telefono_usuario2.getText(),
@@ -939,6 +928,5 @@ public class jframe_ManejoUsuario extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField_telefono_usuario1;
     private javax.swing.JTextField jTextField_telefono_usuario2;
     private javax.swing.JTextField jTextField_telefono_usuario3;
-    private javax.swing.JTextField jTextField_telefono_usuario4;
     // End of variables declaration//GEN-END:variables
 }

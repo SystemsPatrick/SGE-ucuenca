@@ -500,7 +500,7 @@ public class jframe_RealizarEncuesta extends javax.swing.JFrame {
         //Condicion para 
         
         Object objUsuario = new Usuario(
-                ClaseValidacion.getNumero(jTextField_cod_usuario.getText()),
+                jTextField_cod_usuario.getText(),
                 jTextField_nombre_usuario.getText(),
                 jTextField_direccion_usuario.getText(),
                 jTextField_telefono_usuario.getText(),

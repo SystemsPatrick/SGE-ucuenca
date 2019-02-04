@@ -10,13 +10,13 @@ package SGE.ucuenca.capLogica;
  * @author Jhon
  */
 public class Usuario {
-    private int cod_usuario; 
+    private String cod_usuario; 
     private String nombre; 
     private String direccion; 
     private String telefono;
     private String correo;
 
-    public Usuario(int cod_usuario, String nombre, String direccion, String telefono, String correo) {
+    public Usuario(String cod_usuario, String nombre, String direccion, String telefono, String correo) {
         this.cod_usuario = cod_usuario;
         this.nombre = nombre;
         this.direccion = direccion;
@@ -24,11 +24,11 @@ public class Usuario {
         this.correo = correo;
     }
 
-    public int getCod_usuario() {
+    public String  getCod_usuario() {
         return cod_usuario;
     }
 
-    public void setCod_usuario(int cod_usuario) {
+    public void setCod_usuario(String cod_usuario) {
         this.cod_usuario = cod_usuario;
     }
 

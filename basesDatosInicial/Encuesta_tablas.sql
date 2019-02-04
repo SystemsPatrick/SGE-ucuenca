@@ -1,8 +1,8 @@
 --eliminar el usuario si existe 
 
---drop user "ENCUESTA_DB" cascade;
+drop user "ENCUESTA_DB" cascade;
 
-CREATE tablespace MyTableSpace datafile 'C:\oraclexe\app\oracle\oradata\XE\MyTableSpace.DBF' size 30M;
+--CREATE tablespace MyTableSpace datafile 'C:\oraclexe\app\oracle\oradata\XE\MyTableSpace.DBF' size 30M;
 
 --CREAR UN USUARIO
 create user ENCUESTA_DB identified by 12345
@@ -50,8 +50,8 @@ CREATE TABLE ENCUESTA
 	CONSTRAINT CF_TIPO_ENCUESTA FOREIGN KEY (cod_tipo_encuesta) REFERENCES TIPO_ENCUESTA(cod_tipo_encuesta)
 );
  CREATE TABLE ENCUESTA_USUARIO(
-	cod_encuesta number(5);
-	cod_usuario number(10);
+	cod_encuesta number(5),
+	cod_usuario number(10),
 	CONSTRAINT CP_ENC_USUA PRIMARY KEY (cod_encuesta, cod_usuario),
 	CONSTRAINT CF_COD_ENCUESTA FOREIGN KEY (cod_encuesta) REFERENCES ENCUESTA(cod_encuesta),
 	CONSTRAINT CF_COD_USUARIO FOREIGN KEY (cod_usuario) REFERENCES USUARIO(cod_usuario)
@@ -99,4 +99,91 @@ CREATE TABLE RESPUESTA_OPCION
 	CONSTRAINT CF_US_RESP_OPCION FOREIGN KEY (cod_usuario) REFERENCES USUARIO (cod_usuario)
 );
 
- 
+
+CREATE OR REPLACE PROCEDURE validarCedulaUsuario(cedula in varchar2, valido out number)
+is
+verificador number;
+finalS number;
+suma number;
+aux number;
+begin
+    suma :=0;
+    aux:=0;
+    valido:=0;
+    verificador:=to_number(substr(cedula,-1));
+    if to_number(substr(cedula,1,2))<24 then
+        if to_number(substr(cedula,3,1))<6 then
+            FOR i IN 1..9 LOOP
+                if MOD(i,2) = 0 then
+                    aux :=TO_NUMBER((SUBSTR(cedula,i,1)));
+                    if aux >=10 then
+                        aux :=aux -9;
+                    end if;
+                else
+                    aux := TO_NUMBER((SUBSTR(cedula,i,1)))*2;
+                    if aux >=10 then
+                        aux :=aux -9;
+                    end if;
+                end if;
+                suma := suma + aux;
+                aux:=0;
+            END LOOP;
+        end if;
+        finalS:=suma+verificador;
+        if mod(finalS,10)=0 then
+            DBMS_OUTPUT.PUT_LINE ('Cedula Correcta');
+            valido:=1;
+        else
+            DBMS_OUTPUT.PUT_LINE ('Cedula Incorrecta');
+            valido:=0;
+        end if;
+    else
+        DBMS_OUTPUT.PUT_LINE ('Cedula Incorrecta');
+        valido:=0;
+    end if;
+end validarCedulaUsuario;
+
+/
+CREATE OR REPLACE PROCEDURE validarCedula(cedula in varchar2, valido out number)
+is
+verificador number;
+finalS number;
+suma number;
+aux number;
+begin
+    suma :=0;
+    aux:=0;
+    valido:=0;
+    verificador:=to_number(substr(cedula,-1));
+    if to_number(substr(cedula,1,2))<24 then
+        if to_number(substr(cedula,3,1))<6 then
+            FOR i IN 1..9 LOOP
+                if MOD(i,2) = 0 then
+                    aux :=TO_NUMBER((SUBSTR(cedula,i,1)));
+                    if aux >=10 then
+                        aux :=aux -9;
+                    end if;
+                else
+                    aux := TO_NUMBER((SUBSTR(cedula,i,1)))*2;
+                    if aux >=10 then
+                        aux :=aux -9;
+                    end if;
+                end if;
+                suma := suma + aux;
+                aux:=0;
+            END LOOP;
+        end if;
+        finalS:=suma+verificador;
+        if mod(finalS,10)=0 then
+            DBMS_OUTPUT.PUT_LINE ('Cedula Correcta');
+            valido:=1;
+        else
+            DBMS_OUTPUT.PUT_LINE ('Cedula Incorrecta');
+            valido:=0;
+        end if;
+    else
+        DBMS_OUTPUT.PUT_LINE ('Cedula Incorrecta');
+        valido:=0;
+    end if;
+end validarCedula;
+/
