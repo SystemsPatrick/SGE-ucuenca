@@ -390,7 +390,7 @@ public class Operaciones_OracleBD {
         // Colocar en el Mapa (Inicializo)
         mapaTablas = new HashMap<String, ArrayList<String>>();
         //Inicio de Metadato - Tablas
-//        cn = con.Conectar(jframe_inicioEncuesta.getjTextField_usuario(), jframe_inicioEncuesta.getjTextField_contraseña()); // "HR", "1234" //"usuario_jhon", "1234"
+//        cn = con.Conectar("USUARIO_ADMIN1", "1234"); // "HR", "1234" //"usuario_jhon", "1234"
         DatabaseMetaData metaDatos;
         try {
             aux_lista = new ArrayList<String>();
@@ -406,7 +406,6 @@ public class Operaciones_OracleBD {
                     // Colocar en el Mapa
                     mapaTablas.put(nombre_tabla, null);
 
-                    // Colocar en el combo box
                     aux_lista.add(nombre_tabla);
                 }
             }
@@ -421,7 +420,7 @@ public class Operaciones_OracleBD {
         }
         return aux_lista;
     }
-
+    
     //Terminado VER HR y Clave
     public static ObservableList<Object> metaDatoCamposTabla(String aux_tablaSelect) {
 
@@ -587,7 +586,7 @@ public class Operaciones_OracleBD {
         DatabaseMetaData metaDatos;
         try {
             metaDatos = cn.getMetaData();
-            ResultSet rs = metaDatos.getTables(null, "USUARIO_JHON"/*PONER MAYUSCULA*/, "%", null); // null, "HR"/*PONER MAYUSCULA*/, "%", null // null, "USUARIO_JHON"/*PONER MAYUSCULA*/, "%", null
+            ResultSet rs = metaDatos.getTables(null, "USUARIO_ADMIN1"/*PONER MAYUSCULA*/, "%", null); // null, "HR"/*PONER MAYUSCULA*/, "%", null // null, "USUARIO_JHON"/*PONER MAYUSCULA*/, "%", null
 
             while (rs.next()) {
                 // 3 = Nombre de Tabla y 4 = tipo de tabla
@@ -621,7 +620,7 @@ public class Operaciones_OracleBD {
         DatabaseMetaData metaDatos;
         try {
             metaDatos = cn.getMetaData();
-            ResultSet rs1 = metaDatos.getColumns("USUARIO_JHON"/*PONER MAYUSCULAS*/, null, aux_tablaSelect, null); // "HR"/*PONER MAYUSCULAS*/, null, aux_tablaSelect, null
+            ResultSet rs1 = metaDatos.getColumns("USUARIO_ADMIN1"/*PONER MAYUSCULAS*/, null, aux_tablaSelect, null); // "HR"/*PONER MAYUSCULAS*/, null, aux_tablaSelect, null
             while (rs1.next()) {
                 // 3 = Nombre de Tabla y 4 = Campos, 5 = tamaño campo, 6 = tipo de dato SQL
 //                String tipoDato_tabla = rs1.getString(6);
