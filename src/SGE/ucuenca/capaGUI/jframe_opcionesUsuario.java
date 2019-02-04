@@ -6,6 +6,9 @@
 package SGE.ucuenca.capaGUI;
 
 import SGE.ucuenca.capaDatos.Operaciones_OracleBD;
+import java.util.Iterator;
+import java.util.List;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -20,7 +23,13 @@ public class jframe_opcionesUsuario extends javax.swing.JFrame {
         this.setBounds(50, 50, 347, 257);
         jLabel_nombreUsuario1.setText("   "+jframe_STARTEncuesta.getjTextField_usuario());
         //Recuperar las Tablas - Para combobox
-        datosRecuperados.metaDatoTablas(jComboBox_tablas);
+        
+        List<String> aux_lista = datosRecuperados.metaDatoTablas();
+        Iterator iterador = aux_lista.iterator();
+        
+        while (iterador.hasNext()) {
+            jComboBox_tablas.addItem((String) iterador.next());
+        }
         
         
     }
