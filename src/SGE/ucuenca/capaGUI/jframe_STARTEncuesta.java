@@ -47,7 +47,7 @@ public class jframe_STARTEncuesta extends javax.swing.JFrame {
 
         jLabel_usuario.setText("Usuario:");
 
-        jTextField_usuario.setText("final");
+        jTextField_usuario.setText("encuesta_db");
         jTextField_usuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_usuarioActionPerformed(evt);
