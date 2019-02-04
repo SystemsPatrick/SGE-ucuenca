@@ -12,6 +12,7 @@ import SGE.ucuenca.capaDatos.Operaciones_OracleBD;
 import java.awt.Frame;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -39,8 +40,15 @@ public class jframe_GestorConsultas extends javax.swing.JFrame {
         setLocationRelativeTo(null);
 
         camposAgregados = new ArrayList<>();
+        
         //Recuperacion de Tablas al Combobox
-        datosRecuperados.metaDatoTablas(jComboBox_selecTablas);
+        List<String> aux_lista = datosRecuperados.metaDatoTablas();
+        Iterator iterador = aux_lista.iterator();
+        
+        while (iterador.hasNext()) {
+            jComboBox_selecTablas.addItem((String) iterador.next());
+        }
+        
 
         //Campos agregados con el boton
         jRadioButtonAsc.setSelected(true);
@@ -931,8 +939,15 @@ public class jframe_GestorConsultas extends javax.swing.JFrame {
     private void jButtonNuevaConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevaConsultaActionPerformed
         // TODO add your handling code here:
         camposAgregados = new ArrayList<>();
+        
         //Recuperacion de Tablas al Combobox
-        datosRecuperados.metaDatoTablas(jComboBox_selecTablas);
+        List<String> aux_lista = datosRecuperados.metaDatoTablas();
+        Iterator iterador = aux_lista.iterator();
+        
+        while (iterador.hasNext()) {
+            jComboBox_selecTablas.addItem((String) iterador.next());
+        }
+        
 
         //Campos agregados con el boton
         jRadioButtonAscActionPerformed(evt);
