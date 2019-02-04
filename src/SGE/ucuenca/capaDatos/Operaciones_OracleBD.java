@@ -15,6 +15,7 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
@@ -399,14 +400,10 @@ public class Operaciones_OracleBD {
             Statement stmt = cn.createStatement();
             //Ejectuta la query
             ResultSet rs = stmt.executeQuery(query);
-            System.out.println("123456789");
 
             while (rs.next()) {
-                System.out.println((String) rs.getObject(1));
                 mapaTablas.put((String) rs.getObject(1), null);
-                System.out.println((String) rs.getObject(1));
                 aux_lista.add((String) rs.getObject(1));
-                System.out.println((String) rs.getObject(1));
             }
         } catch (SQLException ex) {
 //            System.out.println("ERROR: "+ ex.getMessage());
@@ -417,33 +414,6 @@ public class Operaciones_OracleBD {
                 System.out.println("\n=====================\n\nERROR: " + ex + "\n=====================\n");
             }
         }
-//        try {
-//            aux_lista = new ArrayList<String>();
-//            
-//            metaDatos = cn.getMetaData();
-//            ResultSet rs = metaDatos.getTables(null, jframe_STARTEncuesta.getjTextField_usuario().toUpperCase()/*PONER MAYUSCULA*/, "%", null); // null, "HR"/*PONER MAYUSCULA*/, "%", null // null, "USUARIO_JHON"/*PONER MAYUSCULA*/, "%", null
-//
-//            while (rs.next()) {
-//                // 3 = Nombre de Tabla y 4 = tipo de tabla
-//                String nombre_tabla = rs.getString(3);
-//                String tipo_tabla = rs.getString(4);
-//
-//                if (tipo_tabla.equalsIgnoreCase("TABLE")) {
-//                    // Colocar en el Mapa
-//                    mapaTablas.put(nombre_tabla, null);
-//
-//                    aux_lista.add(nombre_tabla);
-//                }
-//            }
-//        } catch (SQLException ex) {
-////            System.out.println("ERROR: "+ ex.getMessage());
-//            int result = JOptionPane.showConfirmDialog(null, "MENSAJE: \n\n" + ex, "Alerta!", JOptionPane.OK_CANCEL_OPTION);
-//            if (result != 0) {
-//                System.out.println("\n=====================\n\nERROR: " + ex + "\n=====================\n");
-//            } else {
-//                System.out.println("\n=====================\n\nERROR: " + ex + "\n=====================\n");
-//            }
-//        }
         return aux_lista;
     }
 
@@ -456,16 +426,19 @@ public class Operaciones_OracleBD {
 //        cn = con.Conectar(jframe_inicioEncuesta.getjTextField_usuario(), jframe_inicioEncuesta.getjTextField_contraseña()); // "HR", "1234"
         try {
 //Crea el objeto Statement
+            String query = "SELECT * FROM encuesta_db." + aux_tablaSelect.toUpperCase();
             Statement stmt = cn.createStatement();
-            //Ejectuta la query
-            String query = "describe encuesta_db." + aux_tablaSelect.toUpperCase();
             ResultSet rs = stmt.executeQuery(query);
-            //ResultSet rs = stmt.executeQuery("SELECT column_name FROM user_tab_cols WHERE table_name='" + aux_tablaSelect.toUpperCase() + "'");
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int columnCount = rsmd.getColumnCount();
 
-            while (rs.next()) {
-                nombreArrayList.add((String) rs.getObject(1));
+            // The column count starts from 1
+            for (int i = 1; i <= columnCount; i++) {
+                String name = rsmd.getColumnName(i);
+                // Do stuff with name
+                nombreArrayList.add(name);
                 mapaTablas.put(aux_tablaSelect, nombreArrayList);
-                datos.add(aux_tablaSelect.toUpperCase() + "." + rs.getObject(1));
+                datos.add(aux_tablaSelect.toUpperCase() + "." + name);
             }
         } catch (SQLException ex) {
 //            System.out.println("ERROR: "+ ex.getMessage());

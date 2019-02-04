@@ -572,7 +572,7 @@ public class jframe_GestorConsultas extends javax.swing.JFrame {
         }
         Object[] myArr = tablasAgregada.toArray();
         for (Object myArr1 : myArr) {
-            consulta.append(" ").append(myArr1.toString()).append(",");
+            consulta.append(" ").append("ENCUESTA_DB.").append(myArr1.toString()).append(",");
         }
         consulta.deleteCharAt(consulta.length() - 1);
         if (jCheckBoxAddCondiciones.isSelected()) {
@@ -820,7 +820,6 @@ public class jframe_GestorConsultas extends javax.swing.JFrame {
     Map<String, ObservableList<Object>> datosConsulta = new HashMap<>();
     private void jComboBox_selecTablasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox_selecTablasItemStateChanged
         // TODO add your handling code here:
-
         String nombreTablaSelect = (String) jComboBox_selecTablas.getSelectedItem();
         if (jComboBox_selecTablas.getSelectedIndex() != 0) {
             if (!datosConsulta.containsKey(nombreTablaSelect)) {

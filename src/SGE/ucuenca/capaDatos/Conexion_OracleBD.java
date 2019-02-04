@@ -6,7 +6,11 @@
 package SGE.ucuenca.capaDatos;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,9 +18,45 @@ import javax.swing.JOptionPane;
  * @author Jhon
  */
 public class Conexion_OracleBD {
+
     private Connection conexion;
     private String Usuario;
     private String password;
+
+    public static void main(String[] args) {
+        try {
+            Class.forName("oracle.jdbc.OracleDriver");
+            String BaseDeDatos = "jdbc:oracle:thin:@localhost:1521:XE";
+            Connection conexion = DriverManager.getConnection(BaseDeDatos, "usuario1", "12345");
+            if (conexion != null) {
+                System.out.println("Conexion exitosa a esquema " + "patrick");
+            } else {
+                System.out.println("Conexion fallida");
+            }
+            Statement stmt = conexion.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM encuesta_db.usuario");
+            ResultSetMetaData rsmd = rs.getMetaData();
+            int columnCount = rsmd.getColumnCount();
+
+            // The column count starts from 1
+            for (int i = 1; i <= columnCount; i++) {
+                String name = rsmd.getColumnName(i);
+                // Do stuff with name
+                System.out.println(name);
+            }
+
+        } catch (Exception e) {
+            int result = JOptionPane.showConfirmDialog(null, "MENSAJE: \n\n" + e, "Alerta!", JOptionPane.OK_CANCEL_OPTION);
+            if (result == 0) {
+                System.out.println("\n=====================\n\nERROR: " + e + "\n=====================\n");
+                System.exit(0);
+            } else {
+                System.out.println("\n=====================\n\nERROR: " + e + "\n=====================\n");
+                System.exit(0);
+            }
+        }
+
+    }
 
     public String getUsuario() {
         return Usuario;
@@ -25,34 +65,34 @@ public class Conexion_OracleBD {
     public String getPassword() {
         return password;
     }
-    
-    public Connection getConexion(){
+
+    public Connection getConexion() {
         return conexion;
     }
 
     public void setConexion(Connection conexion) {
         this.conexion = conexion;
     }
-    
+
     public Connection Conectar(String getUsuario, String getContraseña) {
-        System.out.println("Usuario ingresado: "+getUsuario);
-        System.out.println("Contraseña ingresada: "+getContraseña);
+        System.out.println("Usuario ingresado: " + getUsuario);
+        System.out.println("Contraseña ingresada: " + getContraseña);
         try {
             Class.forName("oracle.jdbc.OracleDriver");
             String BaseDeDatos = "jdbc:oracle:thin:@localhost:1521:XE";
             conexion = DriverManager.getConnection(BaseDeDatos, getUsuario, getContraseña);
             if (conexion != null) {
-                System.out.println("Conexion exitosa a esquema "+getUsuario);
+                System.out.println("Conexion exitosa a esquema " + getUsuario);
             } else {
                 System.out.println("Conexion fallida");
             }
         } catch (Exception e) {
-            int result = JOptionPane.showConfirmDialog(null, "MENSAJE: \n\n"+e, "Alerta!", JOptionPane.OK_CANCEL_OPTION);
+            int result = JOptionPane.showConfirmDialog(null, "MENSAJE: \n\n" + e, "Alerta!", JOptionPane.OK_CANCEL_OPTION);
             if (result == 0) {
-                System.out.println("\n=====================\n\nERROR: "+e+"\n=====================\n");
+                System.out.println("\n=====================\n\nERROR: " + e + "\n=====================\n");
                 System.exit(0);
             } else {
-                System.out.println("\n=====================\n\nERROR: "+e+"\n=====================\n");
+                System.out.println("\n=====================\n\nERROR: " + e + "\n=====================\n");
                 System.exit(0);
             }
         }
@@ -60,5 +100,4 @@ public class Conexion_OracleBD {
         return this.conexion;
     }
 
-    
 }
