@@ -387,7 +387,6 @@ public class Operaciones_OracleBD {
     //Terminado VER HR y Clave
     public List<String> metaDatoTablas() {
         List<String> aux_lista = null;
-        System.out.println("123456789");
         String query = "SELECT TABLE_NAME FROM ALL_TABLES WHERE OWNER = 'ENCUESTA_DB'";
         // Colocar en el Mapa (Inicializo)
         mapaTablas = new HashMap<String, ArrayList<String>>();
@@ -395,16 +394,19 @@ public class Operaciones_OracleBD {
 //        cn = con.Conectar("USUARIO_ADMIN1", "1234"); // "HR", "1234" //"usuario_jhon", "1234"
         DatabaseMetaData metaDatos;
         try {
+            aux_lista = new ArrayList<String>();
             //Crea el objeto Statement
             Statement stmt = cn.createStatement();
             //Ejectuta la query
             ResultSet rs = stmt.executeQuery(query);
-            System.out.println("123456789");    
-          
+            System.out.println("123456789");
+
             while (rs.next()) {
                 System.out.println((String) rs.getObject(1));
                 mapaTablas.put((String) rs.getObject(1), null);
+                System.out.println((String) rs.getObject(1));
                 aux_lista.add((String) rs.getObject(1));
+                System.out.println((String) rs.getObject(1));
             }
         } catch (SQLException ex) {
 //            System.out.println("ERROR: "+ ex.getMessage());
@@ -456,7 +458,9 @@ public class Operaciones_OracleBD {
 //Crea el objeto Statement
             Statement stmt = cn.createStatement();
             //Ejectuta la query
-            ResultSet rs = stmt.executeQuery("SELECT column_name FROM user_tab_cols WHERE table_name='" + aux_tablaSelect.toUpperCase() + "'");
+            String query = "describe encuesta_db." + aux_tablaSelect.toUpperCase();
+            ResultSet rs = stmt.executeQuery(query);
+            //ResultSet rs = stmt.executeQuery("SELECT column_name FROM user_tab_cols WHERE table_name='" + aux_tablaSelect.toUpperCase() + "'");
 
             while (rs.next()) {
                 nombreArrayList.add((String) rs.getObject(1));
