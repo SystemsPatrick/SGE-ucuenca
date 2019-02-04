@@ -1,6 +1,6 @@
 --eliminar el usuario si existe 
 
-drop user "ENCUESTA_DB" cascade;
+--drop user "ENCUESTA_DB" cascade;
 
 CREATE tablespace MyTableSpace datafile 'C:\oraclexe\app\oracle\oradata\XE\MyTableSpace.DBF' size 30M;
 
@@ -49,7 +49,14 @@ CREATE TABLE ENCUESTA
 	CONSTRAINT CP_ENCUESTA PRIMARY KEY (cod_encuesta),
 	CONSTRAINT CF_TIPO_ENCUESTA FOREIGN KEY (cod_tipo_encuesta) REFERENCES TIPO_ENCUESTA(cod_tipo_encuesta)
 );
- 
+ CREATE TABLE ENCUESTA_USUARIO(
+	cod_encuesta number(5);
+	cod_usuario number(10);
+	CONSTRAINT CP_ENC_USUA PRIMARY KEY (cod_encuesta, cod_usuario),
+	CONSTRAINT CF_COD_ENCUESTA FOREIGN KEY (cod_encuesta) REFERENCES ENCUESTA(cod_encuesta),
+	CONSTRAINT CF_COD_USUARIO FOREIGN KEY (cod_usuario) REFERENCES USUARIO(cod_usuario)
+ 	);
+
 CREATE TABLE PREGUNTA
 (
 	cod_encuesta number(5),
@@ -91,4 +98,5 @@ CREATE TABLE RESPUESTA_OPCION
 	CONSTRAINT CF_E_P_RESP_OPCION FOREIGN KEY (cod_encuesta, cod_pregunta,cod_opc_multiple) REFERENCES P_OPMULTIPLE(cod_encuesta,cod_pregunta,cod_opc_multiple),
 	CONSTRAINT CF_US_RESP_OPCION FOREIGN KEY (cod_usuario) REFERENCES USUARIO (cod_usuario)
 );
+
  
