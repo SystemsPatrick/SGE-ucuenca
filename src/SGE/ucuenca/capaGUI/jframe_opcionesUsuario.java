@@ -28,7 +28,6 @@ public class jframe_opcionesUsuario extends javax.swing.JFrame {
         List<String> aux_lista = datosRecuperados.metaDatoTablas();
         System.out.println("--->"+aux_lista);
         Iterator iterador = aux_lista.iterator();
-         System.out.println("patricio fajardo ");
         while (iterador.hasNext()) {
             jComboBox_tablas.addItem((String) iterador.next());
         }
