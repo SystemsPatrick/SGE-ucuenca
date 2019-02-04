@@ -23,6 +23,7 @@ public class jframe_STARTEncuesta extends javax.swing.JFrame {
     public jframe_STARTEncuesta() {
         initComponents();
         setLocationRelativeTo(null);
+        System.out.println("patricio fajardo 1");
     }
     
     

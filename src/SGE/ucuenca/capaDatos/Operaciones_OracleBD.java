@@ -387,27 +387,24 @@ public class Operaciones_OracleBD {
     //Terminado VER HR y Clave
     public List<String> metaDatoTablas() {
         List<String> aux_lista = null;
+        System.out.println("123456789");
+        String query = "SELECT TABLE_NAME FROM ALL_TABLES WHERE OWNER = 'ENCUESTA_DB'";
         // Colocar en el Mapa (Inicializo)
         mapaTablas = new HashMap<String, ArrayList<String>>();
         //Inicio de Metadato - Tablas
 //        cn = con.Conectar("USUARIO_ADMIN1", "1234"); // "HR", "1234" //"usuario_jhon", "1234"
         DatabaseMetaData metaDatos;
         try {
-            aux_lista = new ArrayList<String>();
-            metaDatos = cn.getMetaData();
-            ResultSet rs = metaDatos.getTables(null, jframe_STARTEncuesta.getjTextField_usuario().toUpperCase()/*PONER MAYUSCULA*/, "%", null); // null, "HR"/*PONER MAYUSCULA*/, "%", null // null, "USUARIO_JHON"/*PONER MAYUSCULA*/, "%", null
-
+            //Crea el objeto Statement
+            Statement stmt = cn.createStatement();
+            //Ejectuta la query
+            ResultSet rs = stmt.executeQuery(query);
+            System.out.println("123456789");    
+          
             while (rs.next()) {
-                // 3 = Nombre de Tabla y 4 = tipo de tabla
-                String nombre_tabla = rs.getString(3);
-                String tipo_tabla = rs.getString(4);
-
-                if (tipo_tabla.equalsIgnoreCase("TABLE")) {
-                    // Colocar en el Mapa
-                    mapaTablas.put(nombre_tabla, null);
-
-                    aux_lista.add(nombre_tabla);
-                }
+                System.out.println((String) rs.getObject(1));
+                mapaTablas.put((String) rs.getObject(1), null);
+                aux_lista.add((String) rs.getObject(1));
             }
         } catch (SQLException ex) {
 //            System.out.println("ERROR: "+ ex.getMessage());
@@ -418,9 +415,36 @@ public class Operaciones_OracleBD {
                 System.out.println("\n=====================\n\nERROR: " + ex + "\n=====================\n");
             }
         }
+//        try {
+//            aux_lista = new ArrayList<String>();
+//            
+//            metaDatos = cn.getMetaData();
+//            ResultSet rs = metaDatos.getTables(null, jframe_STARTEncuesta.getjTextField_usuario().toUpperCase()/*PONER MAYUSCULA*/, "%", null); // null, "HR"/*PONER MAYUSCULA*/, "%", null // null, "USUARIO_JHON"/*PONER MAYUSCULA*/, "%", null
+//
+//            while (rs.next()) {
+//                // 3 = Nombre de Tabla y 4 = tipo de tabla
+//                String nombre_tabla = rs.getString(3);
+//                String tipo_tabla = rs.getString(4);
+//
+//                if (tipo_tabla.equalsIgnoreCase("TABLE")) {
+//                    // Colocar en el Mapa
+//                    mapaTablas.put(nombre_tabla, null);
+//
+//                    aux_lista.add(nombre_tabla);
+//                }
+//            }
+//        } catch (SQLException ex) {
+////            System.out.println("ERROR: "+ ex.getMessage());
+//            int result = JOptionPane.showConfirmDialog(null, "MENSAJE: \n\n" + ex, "Alerta!", JOptionPane.OK_CANCEL_OPTION);
+//            if (result != 0) {
+//                System.out.println("\n=====================\n\nERROR: " + ex + "\n=====================\n");
+//            } else {
+//                System.out.println("\n=====================\n\nERROR: " + ex + "\n=====================\n");
+//            }
+//        }
         return aux_lista;
     }
-    
+
     //Terminado VER HR y Clave
     public static ObservableList<Object> metaDatoCamposTabla(String aux_tablaSelect) {
 
@@ -428,7 +452,6 @@ public class Operaciones_OracleBD {
         ObservableList<Object> datos = FXCollections.observableArrayList();
         //Inicio de Metadato - Campos
 //        cn = con.Conectar(jframe_inicioEncuesta.getjTextField_usuario(), jframe_inicioEncuesta.getjTextField_contraseña()); // "HR", "1234"
-        DatabaseMetaData metaDatos;
         try {
 //Crea el objeto Statement
             Statement stmt = cn.createStatement();
@@ -440,22 +463,6 @@ public class Operaciones_OracleBD {
                 mapaTablas.put(aux_tablaSelect, nombreArrayList);
                 datos.add(aux_tablaSelect.toUpperCase() + "." + rs.getObject(1));
             }
-
-//            metaDatos = cn.getMetaData();
-//            ResultSet rs1 = metaDatos.getColumns(null/*PONER MAYUSCULAS*/, null, aux_tablaSelect, null); // "HR"/*PONER MAYUSCULAS*/, null, aux_tablaSelect, null
-//            while (rs1.next()) {
-//
-//                // 3 = Nombre de Tabla y 4 = Campos, 5 = tamaño campo, 6 = tipo de dato SQL
-////                String tipoDato_tabla = rs1.getString(6);
-//                String nombre_campo = rs1.getString(4);
-//                System.out.println("***** " + nombre_campo);
-////                aux_comBox.addItem(nombre_campo);
-////                aux_comBox.repaint();
-//                // Agrega los campos a la clave de la tabla seleccionada
-//                nombreArrayList.add(nombre_campo);
-//                mapaTablas.put(aux_tablaSelect, nombreArrayList);
-//
-//            }
         } catch (SQLException ex) {
 //            System.out.println("ERROR: "+ ex.getMessage());
             int result = JOptionPane.showConfirmDialog(null, "MENSAJE: \n\n" + ex, "Alerta!", JOptionPane.OK_CANCEL_OPTION);
@@ -698,7 +705,7 @@ public class Operaciones_OracleBD {
     public ObservableList<Object[]> registros(String consulta, int numcol) {
         ObservableList<Object[]> datos = FXCollections.observableArrayList();
         try {
-            sql=cn.createStatement();
+            sql = cn.createStatement();
             rs = sql.executeQuery(consulta);
             while (rs.next()) {
                 Object[] aux = new Object[numcol];
@@ -757,7 +764,7 @@ public class Operaciones_OracleBD {
             cn.rollback();
         }
     }
-    
+
     public ObservableList<Object[]> reg() {
         return null;
     }
@@ -765,59 +772,57 @@ public class Operaciones_OracleBD {
     //=========================================================================
     //  MANEJO DE USUARIOS
     //=========================================================================
-    
     //Creacion de Usuarios
-    public boolean crearUsuariosSQL(String nuevoUsuario, String nuevaContraseña, int valorSelectRol){
+    public boolean crearUsuariosSQL(String nuevoUsuario, String nuevaContraseña, int valorSelectRol) {
         boolean valido = true;
         try {
 //            cn = con.Conectar(jframe_administrarUsuarios.getUsuario(), jframe_administrarUsuarios.getContraseña());
             sql = cn.createStatement();
             //Creacion de usuario
-            String crearUsuario = "CREATE USER "+nuevoUsuario+ " IDENTIFIED BY "+nuevaContraseña+" DEFAULT TABLESPACE MyTablespace TEMPORARY TABLESPACE TEMP ACCOUNT UNLOCK";
-            System.out.println("Sentencia CREATE USER:  "+crearUsuario);
+            String crearUsuario = "CREATE USER " + nuevoUsuario + " IDENTIFIED BY " + nuevaContraseña + " DEFAULT TABLESPACE MyTablespace TEMPORARY TABLESPACE TEMP ACCOUNT UNLOCK";
+            System.out.println("Sentencia CREATE USER:  " + crearUsuario);
             rs = sql.executeQuery(crearUsuario);
-            
+
             //Asignar permisos de Conexion
-            String crearRolConnect = "GRANT CONNECT TO "+nuevoUsuario;
-            String crearRolResource = "GRANT RESOURCE TO "+ nuevoUsuario;
-            System.out.println("Sentencia GRANT CONNECT:  "+crearRolConnect);
-            System.out.println("Sentencia GRANT RESOURCE:  "+crearRolResource);
+            String crearRolConnect = "GRANT CONNECT TO " + nuevoUsuario;
+            String crearRolResource = "GRANT RESOURCE TO " + nuevoUsuario;
+            System.out.println("Sentencia GRANT CONNECT:  " + crearRolConnect);
+            System.out.println("Sentencia GRANT RESOURCE:  " + crearRolResource);
             rs = sql.executeQuery(crearRolConnect);
             rs = sql.executeQuery(crearRolResource);
-            
+
             //Condicion para asignar ROLES Administradores o Encuestadores
             // 0 = Admin, 1 = Encuestador
             if (valorSelectRol == 0) {
                 //GRANT dba TO rol_administrador;
                 System.out.println("\tROL DE ADMIN");
-                String crearRolDBA = "GRANT rol_administrador TO "+nuevoUsuario;
+                String crearRolDBA = "GRANT rol_administrador TO " + nuevoUsuario;
                 rs = sql.executeQuery(crearRolDBA);
             }
             if (valorSelectRol == 1) {
                 //GRANT create session, delete any table, insert any table, select any table, update any table TO rol_encuestador;
                 System.out.println("\tROL DE ENCUESTADOR - Privilegios de Objetos");
-                String rolToTablas = "GRANT insert, delete, update, select ON USUARIO TO "+nuevoUsuario;
+                String rolToTablas = "GRANT insert, delete, update, select ON USUARIO TO " + nuevoUsuario;
                 rs = sql.executeQuery(rolToTablas);
-                rolToTablas = "GRANT insert, delete, update, select ON TIPO_ENCUESTA TO "+nuevoUsuario;
+                rolToTablas = "GRANT insert, delete, update, select ON TIPO_ENCUESTA TO " + nuevoUsuario;
                 rs = sql.executeQuery(rolToTablas);
-                rolToTablas = "GRANT insert, delete, update, select ON ENCUESTA TO "+nuevoUsuario;
+                rolToTablas = "GRANT insert, delete, update, select ON ENCUESTA TO " + nuevoUsuario;
                 rs = sql.executeQuery(rolToTablas);
-                rolToTablas = "GRANT insert, delete, update, select ON PREGUNTA TO "+nuevoUsuario;
+                rolToTablas = "GRANT insert, delete, update, select ON PREGUNTA TO " + nuevoUsuario;
                 rs = sql.executeQuery(rolToTablas);
-                rolToTablas = "GRANT insert, delete, update, select ON P_OPMULTIPLE TO "+nuevoUsuario;
+                rolToTablas = "GRANT insert, delete, update, select ON P_OPMULTIPLE TO " + nuevoUsuario;
                 rs = sql.executeQuery(rolToTablas);
             }
             if (valorSelectRol == 2) {
                 //GRANT create session, insert, select TO rol_cliente;
                 System.out.println("\tROL DE CLIENTE - Privilegios de Objetos");
-                String rolToTablas = "GRANT insert, select ON RESPUESTA_TEXTO TO "+nuevoUsuario;
+                String rolToTablas = "GRANT insert, select ON RESPUESTA_TEXTO TO " + nuevoUsuario;
                 rs = sql.executeQuery(rolToTablas);
-                rolToTablas = "GRANT insert, select ON RESPUESTA_OPCION TO "+nuevoUsuario;
+                rolToTablas = "GRANT insert, select ON RESPUESTA_OPCION TO " + nuevoUsuario;
                 rs = sql.executeQuery(rolToTablas);
-                
+
             }
-            
-            
+
             System.out.println("========    GUARDAR ========");
             valido = true;
             //Condicion para asignar ROLES Administradores o Encuestadores
@@ -832,9 +837,9 @@ public class Operaciones_OracleBD {
         }
         return valido;
     }
-    
+
     //Eliminar Usuario
-    public boolean eliminarUsuariosSQL(String nuevoUsuario){
+    public boolean eliminarUsuariosSQL(String nuevoUsuario) {
         boolean valido = true;
         try {
 //            cn = con.Conectar(jframe_administrarUsuarios.getUsuario(), jframe_administrarUsuarios.getContraseña());
@@ -858,7 +863,7 @@ public class Operaciones_OracleBD {
     }
 
     //Obtener para el Jlist Usuarios
-    public List<String> agregarUsuariosJlist(){
+    public List<String> agregarUsuariosJlist() {
         List<String> aux_lista = null;
         try {
 //            cn = con.Conectar(jframe_administrarUsuarios.getUsuario(), jframe_administrarUsuarios.getContraseña());
@@ -867,12 +872,12 @@ public class Operaciones_OracleBD {
             sql = cn.createStatement();
             selectStringQuery = "SELECT * FROM ALL_USERS";
             rs = sql.executeQuery(selectStringQuery);
-            
+
             while (rs.next()) {
                 todosUsuarios = rs.getString("USERNAME");
                 aux_lista.add(todosUsuarios);
             }
-            
+
         } catch (SQLException ex) {
             int result = JOptionPane.showConfirmDialog(null, "MENSAJE: \n\n" + ex.getMessage(), "Alerta!", JOptionPane.OK_CANCEL_OPTION);
             if (result != 0) {
@@ -883,24 +888,24 @@ public class Operaciones_OracleBD {
         }
         return aux_lista;
     }
-    
+
     //Obtener para el Jlist Privilegios
-    public List<String> agregarPrivilegiosJlist(String aux_usuarioSeleccionado){
+    public List<String> agregarPrivilegiosJlist(String aux_usuarioSeleccionado) {
         List<String> aux_lista = null;
         try {
             aux_lista = new ArrayList<String>();
 //            cn = con.Conectar(jframe_administrarUsuarios.getUsuario(), jframe_administrarUsuarios.getContraseña());
             String todosPrivilegios;
             sql = cn.createStatement();
-            selectStringQuery = "SELECT * FROM DBA_SYS_PRIVS WHERE GRANTEE = "+aux_usuarioSeleccionado.toUpperCase();
-            System.out.println("PRIVILEGIOS:    "+ selectStringQuery);
+            selectStringQuery = "SELECT * FROM DBA_SYS_PRIVS WHERE GRANTEE = " + aux_usuarioSeleccionado.toUpperCase();
+            System.out.println("PRIVILEGIOS:    " + selectStringQuery);
             rs = sql.executeQuery(selectStringQuery);
-            
+
             while (rs.next()) {
                 todosPrivilegios = rs.getString("PRIVILEGE");
                 aux_lista.add(todosPrivilegios);
             }
-            
+
         } catch (SQLException ex) {
             int result = JOptionPane.showConfirmDialog(null, "MENSAJE: \n\n" + ex.getMessage(), "Alerta!", JOptionPane.OK_CANCEL_OPTION);
             if (result != 0) {
@@ -911,15 +916,15 @@ public class Operaciones_OracleBD {
         }
         return aux_lista;
     }
-    
+
     //Agregar Privolegios
-    public void agregarPrivilegios(String aux_privilegios, String aux_usuarioSelec){
+    public void agregarPrivilegios(String aux_privilegios, String aux_usuarioSelec) {
         try {
             selectStringQuery = "";
 //            cn = con.Conectar(jframe_administrarUsuarios.getUsuario(), jframe_administrarUsuarios.getContraseña());
             sql = cn.createStatement();
-            selectStringQuery = "GRANT "+aux_privilegios+" TO "+aux_usuarioSelec;
-            System.out.println("Asisgar privilegios: "+selectStringQuery);
+            selectStringQuery = "GRANT " + aux_privilegios + " TO " + aux_usuarioSelec;
+            System.out.println("Asisgar privilegios: " + selectStringQuery);
             rs = sql.executeQuery(selectStringQuery);
         } catch (SQLException ex) {
             int result = JOptionPane.showConfirmDialog(null, "MENSAJE: \n\n" + ex.getMessage(), "Alerta!", JOptionPane.OK_CANCEL_OPTION);
@@ -930,15 +935,15 @@ public class Operaciones_OracleBD {
             }
         }
     }
-    
+
     //Quitar Privilegios
-    public void quitarPrivilegios(String aux_privilegios, String aux_usuarioSelec){
+    public void quitarPrivilegios(String aux_privilegios, String aux_usuarioSelec) {
         try {
             selectStringQuery = "";
 //            cn = con.Conectar(jframe_administrarUsuarios.getUsuario(), jframe_administrarUsuarios.getContraseña());
             sql = cn.createStatement();
-            selectStringQuery = "REVOKE "+aux_privilegios+" FROM "+aux_usuarioSelec;
-            System.out.println("Asisgar privilegios: "+selectStringQuery);
+            selectStringQuery = "REVOKE " + aux_privilegios + " FROM " + aux_usuarioSelec;
+            System.out.println("Asisgar privilegios: " + selectStringQuery);
             rs = sql.executeQuery(selectStringQuery);
             selectStringQuery = "";
         } catch (SQLException ex) {
@@ -950,25 +955,25 @@ public class Operaciones_OracleBD {
             }
         }
     }
-    
+
     //SIN USAR
     //Obtener para el Jlist (Privilegios del Rol)
-    public List<String> agregarRolesJlist(String aux_tipoRoles){
+    public List<String> agregarRolesJlist(String aux_tipoRoles) {
         List<String> aux_lista = null;
         try {
             aux_lista = new ArrayList<String>();
 //            cn = con.Conectar(jframe_administrarUsuarios.getUsuario(), jframe_administrarUsuarios.getContraseña());
             String todosPrivilegios;
             sql = cn.createStatement();
-            selectStringQuery = "SELECT * FROM DBA_SYS_PRIVS WHERE GRANTEE = "+aux_tipoRoles.toUpperCase()+ " ORDER BY GRANTEE";
-            System.out.println("PRIVILEGIOS:    "+ selectStringQuery);
+            selectStringQuery = "SELECT * FROM DBA_SYS_PRIVS WHERE GRANTEE = " + aux_tipoRoles.toUpperCase() + " ORDER BY GRANTEE";
+            System.out.println("PRIVILEGIOS:    " + selectStringQuery);
             rs = sql.executeQuery(selectStringQuery);
-            
+
             while (rs.next()) {
                 todosPrivilegios = rs.getString("PRIVILEGE");
                 aux_lista.add(todosPrivilegios);
             }
-            
+
         } catch (SQLException ex) {
             int result = JOptionPane.showConfirmDialog(null, "MENSAJE: \n\n" + ex.getMessage(), "Alerta!", JOptionPane.OK_CANCEL_OPTION);
             if (result != 0) {
@@ -979,24 +984,24 @@ public class Operaciones_OracleBD {
         }
         return aux_lista;
     }
-    
+
     //Obtener para el Jlist Roles de Usuario Seleccionado
-    public List<String> agregarRolesUsuarioSelect(String aux_nombreUsuario){
+    public List<String> agregarRolesUsuarioSelect(String aux_nombreUsuario) {
         List<String> aux_lista = null;
         try {
             aux_lista = new ArrayList<String>();
 //            cn = con.Conectar(jframe_administrarUsuarios.getUsuario(), jframe_administrarUsuarios.getContraseña());
             String todosRoles;
             sql = cn.createStatement();
-            selectStringQuery = "SELECT * FROM DBA_ROLE_PRIVS WHERE GRANTEE = "+aux_nombreUsuario.toUpperCase();
-            System.out.println("PRIVILEGIOS:    "+ selectStringQuery);
+            selectStringQuery = "SELECT * FROM DBA_ROLE_PRIVS WHERE GRANTEE = " + aux_nombreUsuario.toUpperCase();
+            System.out.println("PRIVILEGIOS:    " + selectStringQuery);
             rs = sql.executeQuery(selectStringQuery);
-            
+
             while (rs.next()) {
                 todosRoles = rs.getString("GRANTED_ROLE");
                 aux_lista.add(todosRoles);
             }
-            
+
         } catch (SQLException ex) {
             int result = JOptionPane.showConfirmDialog(null, "MENSAJE: \n\n" + ex.getMessage(), "Alerta!", JOptionPane.OK_CANCEL_OPTION);
             if (result != 0) {
@@ -1007,13 +1012,10 @@ public class Operaciones_OracleBD {
         }
         return aux_lista;
     }
-    
-    
+
     //=========================================================================
     //  MANEJO DE OBJETOS
     //=========================================================================
-    
-    
     //=========================================================================
     //  MANEJO DE ROLES
     //=========================================================================

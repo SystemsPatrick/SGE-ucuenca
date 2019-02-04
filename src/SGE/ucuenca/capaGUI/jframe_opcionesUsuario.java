@@ -24,9 +24,10 @@ public class jframe_opcionesUsuario extends javax.swing.JFrame {
         jLabel_nombreUsuario1.setText("   "+jframe_STARTEncuesta.getjTextField_usuario());
         //Recuperar las Tablas - Para combobox
         
+        System.out.println("patricio fajardo 1");
         List<String> aux_lista = datosRecuperados.metaDatoTablas();
         Iterator iterador = aux_lista.iterator();
-        
+         System.out.println("patricio fajardo ");
         while (iterador.hasNext()) {
             jComboBox_tablas.addItem((String) iterador.next());
         }
