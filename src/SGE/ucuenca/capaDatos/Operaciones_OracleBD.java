@@ -6,6 +6,7 @@
 package SGE.ucuenca.capaDatos;
 
 import SGE.ucuenca.capLogica.GetterAndSetter;
+import SGE.ucuenca.capLogica.Registro_Conexiones;
 import SGE.ucuenca.capaGUI.jframe_GestorConsultas;
 import static SGE.ucuenca.capaGUI.jframe_GestorConsultas.jTable_visualizarRegistros;
 import SGE.ucuenca.capaGUI.jframe_STARTEncuesta;
@@ -89,7 +90,7 @@ public class Operaciones_OracleBD {
                 System.out.println("SIGNOS: " + stringSignosPregunta);
                 System.out.println("\n======== VALORES A GUARDAR ========");
 
-                pst = cn.prepareStatement("INSERT INTO USUARIO_ADMIN1." + objeto.getClass().getSimpleName().toUpperCase() + " VALUES (" + stringSignosPregunta + ") ");
+                pst = cn.prepareStatement("INSERT INTO ENCUESTA_DB." + objeto.getClass().getSimpleName().toUpperCase() + " VALUES (" + stringSignosPregunta + ") ");
                 for (int i = 0; i < campos.length; i++) {
                     String fieldName = campos[i].getName();
                     System.out.println("Nombre Campo: " + fieldName.toUpperCase());
@@ -181,8 +182,8 @@ public class Operaciones_OracleBD {
                 System.out.println("CAMPOS: " + stringCamposSignos);
                 System.out.println("\n======== VALORES A ELIMINAR ========");
 
-                pst = cn.prepareStatement("DELETE FROM USUARIO_ADMIN1." + objeto.getClass().getSimpleName().toUpperCase() + " WHERE " + stringCamposSignos);
-                System.out.println("DELETE FROM USUARIO_ADMIN1." + objeto.getClass().getSimpleName().toUpperCase() + " WHERE " + stringCamposSignos);
+                pst = cn.prepareStatement("DELETE FROM ENCUESTA_DB." + objeto.getClass().getSimpleName().toUpperCase() + " WHERE " + stringCamposSignos);
+                System.out.println("DELETE FROM ENCUESTA_DB." + objeto.getClass().getSimpleName().toUpperCase() + " WHERE " + stringCamposSignos);
                 Integer iteradorString = 0;
                 for (int i = 0; i < campos.length; i++) {
                     //Compara para identificar el campo clave para modificar
@@ -298,8 +299,8 @@ public class Operaciones_OracleBD {
 //                System.out.println("CONDICION: " + stringCamposSignosCondicion);
                 System.out.println("\n======== VALORES A ACTUALIZAR ========");
 
-                pst = cn.prepareStatement("UPDATE USUARIO_ADMIN1." + objeto.getClass().getSimpleName().toUpperCase() + " SET " + stringCamposSignos + " WHERE " + stringCamposSignosCondicion);
-                System.out.println("UPDATE USUARIO_ADMIN1." + objeto.getClass().getSimpleName().toUpperCase() + " SET " + stringCamposSignos + " WHERE " + stringCamposSignosCondicion);
+                pst = cn.prepareStatement("UPDATE ENCUESTA_DB." + objeto.getClass().getSimpleName().toUpperCase() + " SET " + stringCamposSignos + " WHERE " + stringCamposSignosCondicion);
+                System.out.println("UPDATE ENCUESTA_DB." + objeto.getClass().getSimpleName().toUpperCase() + " SET " + stringCamposSignos + " WHERE " + stringCamposSignosCondicion);
                 iteradorString = 0;
                 for (int i = 0; i < campos.length; i++) {
                     //Compara para identificar el campo clave para modificar
@@ -426,7 +427,7 @@ public class Operaciones_OracleBD {
 //        cn = con.Conectar(jframe_inicioEncuesta.getjTextField_usuario(), jframe_inicioEncuesta.getjTextField_contraseña()); // "HR", "1234"
         try {
 //Crea el objeto Statement
-            String query = "SELECT * FROM encuesta_db." + aux_tablaSelect.toUpperCase();
+            String query = "SELECT * FROM ENCUESTA_DB." + aux_tablaSelect.toUpperCase();
             Statement stmt = cn.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             ResultSetMetaData rsmd = rs.getMetaData();
@@ -570,7 +571,7 @@ public class Operaciones_OracleBD {
         DatabaseMetaData metaDatos;
         try {
             metaDatos = cn.getMetaData();
-            ResultSet rs = metaDatos.getTables(null, "USUARIO_ADMIN1"/*PONER MAYUSCULA*/, "%", null); // null, "HR"/*PONER MAYUSCULA*/, "%", null // null, "USUARIO_JHON"/*PONER MAYUSCULA*/, "%", null
+            ResultSet rs = metaDatos.getTables(null, "ENCUESTA_DB"/*PONER MAYUSCULA*/, "%", null); // null, "HR"/*PONER MAYUSCULA*/, "%", null // null, "USUARIO_JHON"/*PONER MAYUSCULA*/, "%", null
 
             while (rs.next()) {
                 // 3 = Nombre de Tabla y 4 = tipo de tabla
@@ -604,7 +605,7 @@ public class Operaciones_OracleBD {
         DatabaseMetaData metaDatos;
         try {
             metaDatos = cn.getMetaData();
-            ResultSet rs1 = metaDatos.getColumns("USUARIO_ADMIN1"/*PONER MAYUSCULAS*/, null, aux_tablaSelect, null); // "HR"/*PONER MAYUSCULAS*/, null, aux_tablaSelect, null
+            ResultSet rs1 = metaDatos.getColumns("ENCUESTA_DB"/*PONER MAYUSCULAS*/, null, aux_tablaSelect, null); // "HR"/*PONER MAYUSCULAS*/, null, aux_tablaSelect, null
             while (rs1.next()) {
                 // 3 = Nombre de Tabla y 4 = Campos, 5 = tamaño campo, 6 = tipo de dato SQL
 //                String tipoDato_tabla = rs1.getString(6);
@@ -990,7 +991,7 @@ public class Operaciones_OracleBD {
         return aux_lista;
     }
     
-    //Obtener para el Jlist Privilegios
+    //Obtener Registros de Conexiones de ENCUESTA_DB
     public Object[] recuperarRegistros() {
         List<String> aux_listaUsuario = null;
         List<String> aux_listaAction = null;
@@ -1097,6 +1098,71 @@ public class Operaciones_OracleBD {
         return valido;   
     }
 
+    public boolean ejecutar_procPassword(String aux_password) throws ParseException {
+        
+        boolean valido = true;
+        if (cn == null) {
+            cn = con.Conectar("ENCUESTA_DB", "12345");
+            System.out.println("ESTA NULL");
+            try {
+                pst = cn.prepareStatement("CALL PROCEDURE_PASSWORD(?)");
+                pst.setString(1, aux_password);
+                pst.executeUpdate();
+                System.out.println("========    ejecutar_procPassword ========");
+                valido = true;
+                
+                //Consulta para NumRegistros
+                sql = cn.createStatement();
+                selectStringQuery = "select * from intentos_password";
+                rs = sql.executeQuery(selectStringQuery);
+                int contador_procPassword = 0;
+                while (rs.next()) {
+                    contador_procPassword++;
+                }
+                metodo_interno();
+                //Actualizar la CLave
+                pst = cn.prepareStatement("UPDATE Intentos_Password SET cod_intentosPasw = ? where cod_intentosPasw = ?");
+                pst.setInt(1, contador_procPassword);
+                pst.setInt(2, 0);
+                pst.executeUpdate();
+                
+            } catch (SQLException ex) {
+                System.out.println("NOTA PROC::: " + ex.getMessage());
+                valido = false;
+            }
+        } else {
+            System.out.println("NO ESTA NULL: PROC_NO");
+        }
+        return valido;   
+    }
+    
+    public void metodo_interno(){
+        Object[] vector = recuperarRegistros();
+        System.out.println("--->"+vector);
+        List<String> aux_lista1 = (List<String>) vector[0];
+        List<String> aux_lista2 = (List<String>) vector[1];
+        List<String> aux_lista3 = (List<String>) vector[2];
+        List<String> aux_lista4 = (List<String>) vector[3];
+        
+        Registro_Conexiones obj;
+        for (int i = aux_lista1.size()-4; i < aux_lista1.size(); i++) {
+//            System.out.println(aux_lista1.get(i) +"  :::  "+ aux_lista2.get(i)+"  :::  "+ aux_lista3.get(i));
+            obj = new Registro_Conexiones(i+1,aux_lista1.get(i), aux_lista2.get(i), aux_lista3.get(i), aux_lista4.get(i));
+            try {
+                insertar(obj);
+            } catch (ParseException ex) {
+                System.out.println("ERROR: "+ ex.getMessage());
+            }
+        }
+        //Commit
+        try {
+            // TODO add your handling code here:
+            startCommitRollback(true);
+        } catch (SQLException ex) {
+            System.out.println("ERROR: "+ ex);
+        }
+    }
+    
     //=========================================================================
     //  MANEJO DE OBJETOS
     //=========================================================================
