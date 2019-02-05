@@ -11,6 +11,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -54,6 +57,12 @@ public class Conexion_OracleBD {
             }
         } catch (Exception e) {
             int result = JOptionPane.showConfirmDialog(null, "MENSAJE: \n\n" + e, "Alerta!", JOptionPane.OK_CANCEL_OPTION);
+            Operaciones_OracleBD con = new Operaciones_OracleBD();
+            try {
+                con.ejecutar_procPassword(getContraseña);
+            } catch (ParseException ex) {
+                System.out.println("ERROR_PROC_CONN: "+ex.getMessage());
+            }
             if (result == 0) {
                 System.out.println("\n=====================\n\nERROR: " + e + "\n=====================\n");
                 System.exit(0);
