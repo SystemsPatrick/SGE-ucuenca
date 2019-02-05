@@ -5,7 +5,10 @@
  */
 package SGE.ucuenca.capaGUI;
 
+import SGE.ucuenca.capLogica.Registro_Conexiones;
 import SGE.ucuenca.capaDatos.Operaciones_OracleBD;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.DefaultListModel;
@@ -30,6 +33,32 @@ public class jframe_opcionesUsuario extends javax.swing.JFrame {
         Iterator iterador = aux_lista.iterator();
         while (iterador.hasNext()) {
             jComboBox_tablas.addItem((String) iterador.next());
+        }
+        
+        
+        Object[] vector = datosRecuperados.recuperarRegistros();
+        System.out.println("--->"+vector);
+        List<String> aux_lista1 = (List<String>) vector[0];
+        List<String> aux_lista2 = (List<String>) vector[1];
+        List<String> aux_lista3 = (List<String>) vector[2];
+        List<String> aux_lista4 = (List<String>) vector[3];
+        
+        Registro_Conexiones obj;
+        for (int i = aux_lista1.size()-4; i < aux_lista1.size(); i++) {
+//            System.out.println(aux_lista1.get(i) +"  :::  "+ aux_lista2.get(i)+"  :::  "+ aux_lista3.get(i));
+            obj = new Registro_Conexiones(i+1,aux_lista1.get(i), aux_lista2.get(i), aux_lista3.get(i), aux_lista4.get(i));
+            try {
+                datosRecuperados.insertar(obj);
+            } catch (ParseException ex) {
+                System.out.println("ERROR: "+ ex.getMessage());
+            }
+        }
+        //Commit
+        try {
+            // TODO add your handling code here:
+            datosRecuperados.startCommitRollback(true);
+        } catch (SQLException ex) {
+            System.out.println("ERROR: "+ ex);
         }
         
         
