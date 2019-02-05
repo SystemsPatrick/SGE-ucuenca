@@ -51,7 +51,7 @@ CREATE TABLE ENCUESTA
 );
  CREATE TABLE ENCUESTA_USUARIO(
 	cod_encuesta number(5),
-	cod_usuario number(10),
+	cod_usuario varchar2(10),
 	CONSTRAINT CP_ENC_USUA PRIMARY KEY (cod_encuesta, cod_usuario),
 	CONSTRAINT CF_COD_ENCUESTA FOREIGN KEY (cod_encuesta) REFERENCES ENCUESTA(cod_encuesta),
 	CONSTRAINT CF_COD_USUARIO FOREIGN KEY (cod_usuario) REFERENCES USUARIO(cod_usuario)
@@ -186,4 +186,11 @@ begin
         valido:=0;
     end if;
 end validarCedula;
+/
+
+CREATE OR REPLACE PROCEDURE ADD_DATOS_USUARIO_ENCUESTA(cod_usuario in VARCHAR2, cod_encuesta in VARCHAR2)
+AS 
+BEGIN 
+INSERT INTO ENCUESTA_USUARIO VALUES (cod_usuario, cod_encuesta); 
+END ADD_DATOS_USUARIO_ENCUESTA;
 /
