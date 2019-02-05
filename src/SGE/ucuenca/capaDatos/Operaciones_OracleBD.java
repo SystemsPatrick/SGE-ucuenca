@@ -989,6 +989,113 @@ public class Operaciones_OracleBD {
         }
         return aux_lista;
     }
+    
+    //Obtener para el Jlist Privilegios
+    public Object[] recuperarRegistros() {
+        List<String> aux_listaUsuario = null;
+        List<String> aux_listaAction = null;
+        List<String> aux_listaCodigo = null;
+        List<String> aux_listaTimeStandExt = null;
+        Object[] aux_arrayList = null;
+        
+        try {
+            aux_listaUsuario = new ArrayList<String>();
+            aux_listaAction = new ArrayList<String>();
+            aux_listaTimeStandExt = new ArrayList<String>();
+            aux_listaCodigo = new ArrayList<String>();
+            aux_arrayList = new Object[4];
+            
+//            cn = con.Conectar(jframe_administrarUsuarios.getUsuario(), jframe_administrarUsuarios.getContraseña());
+            String usuariosRec;
+            String actionRec;
+            String extendTimeRec;
+            String codigoRec;
+            sql = cn.createStatement();
+            selectStringQuery = "SELECT USERNAME, ACTION_NAME, EXTENDED_TIMESTAMP, RETURNCODE FROM DBA_AUDIT_SESSION";
+            System.out.println("PRIVILEGIOS:    " + selectStringQuery);
+            rs = sql.executeQuery(selectStringQuery);
+
+            while (rs.next()) {
+                usuariosRec = rs.getString("USERNAME");
+                aux_listaUsuario.add(usuariosRec);
+                actionRec = rs.getString("ACTION_NAME");
+                aux_listaAction.add(actionRec);
+                extendTimeRec = rs.getString("EXTENDED_TIMESTAMP");
+                aux_listaTimeStandExt.add(extendTimeRec);
+                codigoRec = rs.getString("RETURNCODE");
+                aux_listaCodigo.add(codigoRec);
+            }
+            
+            aux_arrayList[0] = aux_listaUsuario;
+            aux_arrayList[1] = aux_listaAction;
+            aux_arrayList[2] = aux_listaTimeStandExt;
+            aux_arrayList[3] = aux_listaCodigo;
+
+        } catch (SQLException ex) {
+            int result = JOptionPane.showConfirmDialog(null, "MENSAJE: \n\n" + ex.getMessage(), "Alerta!", JOptionPane.OK_CANCEL_OPTION);
+            if (result != 0) {
+                System.out.println("\n=====================\n\nERROR: " + ex + "\n=====================\n");
+            } else {
+                System.out.println("\n=====================\n\nERROR: " + ex + "\n=====================\n");
+            }
+        }
+        return aux_arrayList;
+    }
+    //Insertar Registros Conexiones
+    public boolean insertar(Object objeto) throws ParseException {
+        //Datos recibidos de la capa de negocios - Instanciado la clase
+
+        //Obtener nombre de clase
+//        System.out.println("Nombre Clase: " + objeto.getClass().getSimpleName().toUpperCase());
+//        cn = con.Conectar(jframe_GestorEncuesta.getjTextField_usuario(), jframe_GestorEncuesta.getjTextField_contraseña());    //Ingresar con los datos de INICIO SESION
+        boolean valido = true;
+        //NUEVO INSERT ========================================================
+        //Pasar valores a Base de Datos
+        if (cn == null) {
+            System.out.println("ESTA NULL");
+        } else {
+//            System.out.println("NO ESTA NULL");
+            try {
+                //Obtener Campos del Objeto
+                Field[] campos = objeto.getClass().getDeclaredFields();
+                String stringSignosPregunta = "";
+                for (int i = 0; i < campos.length; i++) {
+                    if (i == 0) {
+                        stringSignosPregunta = stringSignosPregunta + "?";
+                    } else {
+                        stringSignosPregunta = stringSignosPregunta + ",?";
+                    }
+                }
+//                System.out.println("SIGNOS: " + stringSignosPregunta);
+//                System.out.println("\n======== VALORES A GUARDAR ========");
+
+                pst = cn.prepareStatement("INSERT INTO ENCUESTA_DB." + objeto.getClass().getSimpleName().toUpperCase() + " VALUES (" + stringSignosPregunta + ") ");
+                for (int i = 0; i < campos.length; i++) {
+                    String fieldName = campos[i].getName();
+//                    System.out.println("Nombre Campo: " + fieldName.toUpperCase());
+
+                    //Compara el tipo de dato del campo
+                    if (campos[i].getType().toString().toUpperCase().contains("STRING")) {
+                        //Obtener Valores de los Campos del Objeto
+//                        System.out.println("Valor Campo: " + gs.callGetter(objeto, fieldName));
+                        pst.setString(i + 1, (String) gs.callGetter(objeto, fieldName));
+                    }
+                    if (campos[i].getType().toString().toUpperCase().contains("INT")) {
+                        //Obtener Valores de los Campos del Objeto
+//                        System.out.println("Valor Campo: " + gs.callGetter(objeto, fieldName));
+                        pst.setInt(i + 1, (Integer) gs.callGetter(objeto, fieldName));
+                    }
+                }
+                pst.executeUpdate();
+//                System.out.println("========    GUARDAR ========");
+                valido = true;
+            } catch (SQLException ex) {
+                System.out.println("NOTA: " + ex.getMessage());
+                valido = false;
+            }
+        }
+        return valido;   
+    }
 
     //=========================================================================
     //  MANEJO DE OBJETOS
