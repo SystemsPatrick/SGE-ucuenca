@@ -147,7 +147,7 @@ public class jframe_START extends javax.swing.JFrame {
 
     private void jButton_RealizarEncuestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_RealizarEncuestaActionPerformed
         
-        jframe_RealizarEncuesta abrir = new jframe_RealizarEncuesta();
+        jframe_STARTResponderEncuesta abrir = new jframe_STARTResponderEncuesta();
         abrir.setVisible(true);
 
     }//GEN-LAST:event_jButton_RealizarEncuestaActionPerformed
