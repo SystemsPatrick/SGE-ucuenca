@@ -56,7 +56,7 @@ public class jframe_RealizarEncuesta extends javax.swing.JFrame {
             Logger.getLogger(jframe_STARTEncuesta.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        jTextField_nombre_usuario.setEnabled(false);
+        jTextField_nombre_usuario.setText(jframe_STARTResponderEncuesta.getjTextField_usuario().toUpperCase());
         jTextField_direccion_usuario.setEnabled(false);
         jTextField_telefono_usuario.setEnabled(false);
         jTextField_correo_usuario.setEnabled(false);
@@ -120,6 +120,7 @@ public class jframe_RealizarEncuesta extends javax.swing.JFrame {
 
         jLabel1.setText("Nombres:");
 
+        jTextField_nombre_usuario.setEnabled(false);
         jTextField_nombre_usuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField_nombre_usuarioActionPerformed(evt);
@@ -163,7 +164,7 @@ public class jframe_RealizarEncuesta extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addGap(0, 3, Short.MAX_VALUE)
+                                    .addGap(0, 0, Short.MAX_VALUE)
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel1)
                                         .addComponent(jLabel2))
@@ -694,21 +695,9 @@ jTextField_cod_usuario.setEnabled(false);
 
     private void jButton_buscarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_buscarUsuarioActionPerformed
         // TODO add your handling code here:
-        String queery = "SELECT * FROM USUARIO WHERE cod_usuario='" + jTextField_cod_usuario.getText() + "'";
-        System.out.println("Consulta "+queery);
-        ObservableList<Object[]> registro = datosRecuperados.registros(queery, 5);
-        System.out.println("Consulta "+registro.size() );
-        if (registro.size() > 0) {
-            jTextField_nombre_usuario.setText(registro.get(2).toString());
-            jTextField_direccion_usuario.setText(registro.get(3).toString());
-            jTextField_telefono_usuario.setText(registro.get(4).toString());
-            jTextField_correo_usuario.setText(registro.get(5).toString());
-        } else {
-            jTextField_nombre_usuario.setEnabled(true);
-            jTextField_direccion_usuario.setEnabled(true);
-            jTextField_telefono_usuario.setEnabled(true);
-            jTextField_correo_usuario.setEnabled(true);
-        }
+        
+        jTextField_direccion_usuario.setEnabled(true);
+        jTextField_telefono_usuario.setEnabled(true);
 
 
     }//GEN-LAST:event_jButton_buscarUsuarioActionPerformed
@@ -811,7 +800,6 @@ jTextField_cod_usuario.setEnabled(false);
     public void activarIniciodeEncuesta() {
         //Deshabilirar Botones y Jtexts
         jTextField_cod_usuario.setEnabled(false);
-        jTextField_nombre_usuario.setEnabled(false);
         jTextField_direccion_usuario.setEnabled(false);
         jTextField_telefono_usuario.setEnabled(false);
         jTextField_correo_usuario.setEnabled(false);
