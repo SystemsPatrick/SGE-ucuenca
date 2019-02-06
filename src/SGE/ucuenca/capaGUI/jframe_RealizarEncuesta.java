@@ -32,7 +32,7 @@ public class jframe_RealizarEncuesta extends javax.swing.JFrame {
     /**
      * Creates new form jframe_RealizarEncuesta
      */
-    ObservableList<String[]> datoConstetadoEncuesta=FXCollections.observableArrayList();
+    ObservableList<String[]> datoConstetadoEncuesta = FXCollections.observableArrayList();
     Operaciones_OracleBD datosRecuperados = new Operaciones_OracleBD();
     public static List<String> camposEnJTable = new ArrayList<String>();
     //Variables de RESPUESTA OPCION
@@ -503,7 +503,7 @@ public class jframe_RealizarEncuesta extends javax.swing.JFrame {
                 && !jTextField_direccion_usuario.isEnabled()
                 && !jTextField_telefono_usuario.isEnabled()
                 && !jTextField_correo_usuario.isEnabled()) {
-jTextField_cod_usuario.setEnabled(false);
+            jTextField_cod_usuario.setEnabled(false);
         } else {
             //Condicion para 
             Object objUsuario = new Usuario(
@@ -542,6 +542,14 @@ jTextField_cod_usuario.setEnabled(false);
         System.out.println("RESPUESTA OPCION: x");
         System.out.println("==============================================");
 
+        
+         //llenado vector de la s preguntas que el usuario responde
+        String[] preguntaAbierta = new String[]{String.valueOf(intCodEncuesta),
+            (String) jTable5.getValueAt(jTable5.getSelectedRow(), 1),
+            jTextField_responderTexto.getText()};
+
+        datoConstetadoEncuesta.add(preguntaAbierta);
+        
         //Instanciar la Clase
         Respuesta_Opcion objRespOpcion = new Respuesta_Opcion(
                 intCodEncuesta,
@@ -589,8 +597,12 @@ jTextField_cod_usuario.setEnabled(false);
         System.out.println("RESPUESTA Texto:" + jTextField_responderTexto.getText());
         System.out.println("==============================================");
 
-        
-        String[] preguntaAbierta=new String[]{String.valueOf(intCodEncuesta),jTextField_responderTexto.getText()};
+        String[] preguntaOpcionM = new String[]{String.valueOf(intCodEncuesta),
+            (String) jTable5.getValueAt(jTable5.getSelectedRow(), 1),
+            (String) jTable4.getValueAt(jTable4.getSelectedRow(), 0),
+            (String) jTable4.getValueAt(jTable4.getSelectedRow(), 1)};
+
+        datoConstetadoEncuesta.add(preguntaOpcionM);
         
         //Instanciar la Clase
         Respuesta_Texto objRespTexto = new Respuesta_Texto(
@@ -644,6 +656,14 @@ jTextField_cod_usuario.setEnabled(false);
         try {
             // TODO add your handling code here:
             datosRecuperados.startCommitRollback(true);
+            //mostrar el mensaje de las respuestas llenadas por un usuario.
+            System.out.println("RESPUESTA DEL USUARIO " + jTextField_nombre_usuario.getText() + " a la encuesta");
+            for (int i = 0; i < datoConstetadoEncuesta.size(); i++) {
+                for (int j = 0; j < datoConstetadoEncuesta.get(i).length; j++) {
+                    System.out.print(datoConstetadoEncuesta.get(i)[j] + " ");
+                }
+                System.out.println("");
+            }
         } catch (SQLException ex) {
             System.out.println("ERROR: " + ex);
         }
@@ -696,7 +716,7 @@ jTextField_cod_usuario.setEnabled(false);
 
     private void jButton_buscarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_buscarUsuarioActionPerformed
         // TODO add your handling code here:
-        
+
         jTextField_direccion_usuario.setEnabled(true);
         jTextField_telefono_usuario.setEnabled(true);
         jTextField_correo_usuario.setEnabled(true);
