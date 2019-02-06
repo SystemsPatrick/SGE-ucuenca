@@ -521,7 +521,8 @@ jTextField_cod_usuario.setEnabled(false);
                     activarIniciodeEncuesta();
                 } else {
                     int result = JOptionPane.showConfirmDialog(null, "MENSAJE: \n\nUsuario existente", "Aviso!", JOptionPane.OK_CANCEL_OPTION);
-                                    }
+                    activarIniciodeEncuesta();
+                }
 
             } catch (ParseException ex) {
                 System.out.println("ERROR: " + ex);
