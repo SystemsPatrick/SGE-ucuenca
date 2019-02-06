@@ -698,7 +698,7 @@ jTextField_cod_usuario.setEnabled(false);
         
         jTextField_direccion_usuario.setEnabled(true);
         jTextField_telefono_usuario.setEnabled(true);
-
+        jTextField_correo_usuario.setEnabled(true);
 
     }//GEN-LAST:event_jButton_buscarUsuarioActionPerformed
 
