@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -30,29 +32,30 @@ public class jframe_RealizarEncuesta extends javax.swing.JFrame {
     /**
      * Creates new form jframe_RealizarEncuesta
      */
+    ObservableList<String[]> datoConstetadoEncuesta=FXCollections.observableArrayList();
     Operaciones_OracleBD datosRecuperados = new Operaciones_OracleBD();
     public static List<String> camposEnJTable = new ArrayList<String>();
     //Variables de RESPUESTA OPCION
     public int intCodEncuesta = 0;
     public int intCodPregunta = 0;
     public int intCodOpcionPregunta = 0;
-    
+
     public jframe_RealizarEncuesta() {
         initComponents();
         setLocationRelativeTo(null);
-        
+
         //Coneccion
         Operaciones_OracleBD objConn = new Operaciones_OracleBD();
-        objConn.cn = objConn.con.Conectar("Encuesta_db","12345");    //Ingresar con los datos de INICIO SESION;
+        objConn.cn = objConn.con.Conectar("Encuesta_db", "12345");    //Ingresar con los datos de INICIO SESION;
 //        objConn.Conectar(jTextField_usuario.getText(), getPasword);
-        
+
         //Este TRY hace que quite el COMMIT AUTOMATICO
         try {
             objConn.cn.setAutoCommit(false);
         } catch (SQLException ex) {
             Logger.getLogger(jframe_STARTEncuesta.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         jTextField_nombre_usuario.setEnabled(false);
         jTextField_direccion_usuario.setEnabled(false);
         jTextField_telefono_usuario.setEnabled(false);
@@ -63,8 +66,7 @@ public class jframe_RealizarEncuesta extends javax.swing.JFrame {
         jButton_responderOpcion.setEnabled(false);
         jButton_siguienteOpcion.setEnabled(false);
         jButton_terminarEncuesta.setEnabled(false);
-        
-        
+
     }
 
     /**
@@ -496,61 +498,62 @@ public class jframe_RealizarEncuesta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_ingresarEncuestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ingresarEncuestaActionPerformed
-        
-        //Condicion para 
-        
-        Object objUsuario = new Usuario(
-                jTextField_cod_usuario.getText(),
-                jTextField_nombre_usuario.getText(),
-                jTextField_direccion_usuario.getText(),
-                jTextField_telefono_usuario.getText(),
-                jTextField_correo_usuario.getText());
-        try {
-            //Enviar los datos a Capa de Datos - Objeto
-            
-            if (datosRecuperados.insertarRegistros(objUsuario)) {
-                //Mostrar Ventana Emergente
-                int result = JOptionPane.showConfirmDialog(null, "MENSAJE: \n\nUsuario Ingresado", "Aviso!", JOptionPane.OK_CANCEL_OPTION);
-                activarIniciodeEncuesta();
-            } else {
-                int result = JOptionPane.showConfirmDialog(null, "MENSAJE: \n\nUsuario existente", "Aviso!", JOptionPane.OK_CANCEL_OPTION);
-                activarIniciodeEncuesta();
+        if (!jTextField_nombre_usuario.isEnabled()
+                && !jTextField_direccion_usuario.isEnabled()
+                && !jTextField_telefono_usuario.isEnabled()
+                && !jTextField_correo_usuario.isEnabled()) {
+jTextField_cod_usuario.setEnabled(false);
+        } else {
+            //Condicion para 
+            Object objUsuario = new Usuario(
+                    jTextField_cod_usuario.getText(),
+                    jTextField_nombre_usuario.getText(),
+                    jTextField_direccion_usuario.getText(),
+                    jTextField_telefono_usuario.getText(),
+                    jTextField_correo_usuario.getText());
+            try {
+                //Enviar los datos a Capa de Datos - Objeto
+
+                if (datosRecuperados.insertarRegistros(objUsuario)) {
+                    //Mostrar Ventana Emergente
+                    int result = JOptionPane.showConfirmDialog(null, "MENSAJE: \n\nUsuario Ingresado", "Aviso!", JOptionPane.OK_CANCEL_OPTION);
+                    activarIniciodeEncuesta();
+                } else {
+                    int result = JOptionPane.showConfirmDialog(null, "MENSAJE: \n\nUsuario existente", "Aviso!", JOptionPane.OK_CANCEL_OPTION);
+                                    }
+
+            } catch (ParseException ex) {
+                System.out.println("ERROR: " + ex);
             }
-            
-        } catch (ParseException ex) {
-            System.out.println("ERROR: "+ex);
         }
-        
-        
-        
-        
-        
+
+
     }//GEN-LAST:event_jButton_ingresarEncuestaActionPerformed
 
     private void jButton_responderOpcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_responderOpcionActionPerformed
-        
+
         System.out.println("==============================================");
-        System.out.println("RESPUESTA Encuesta: "+ intCodEncuesta);
-        System.out.println("RESPUESTA Pregunta: "+ intCodPregunta);
-        System.out.println("RESPUESTA Opcion:"+ intCodOpcionPregunta);
-        System.out.println("USUARIO: "+ jTextField_cod_usuario.getText());
+        System.out.println("RESPUESTA Encuesta: " + intCodEncuesta);
+        System.out.println("RESPUESTA Pregunta: " + intCodPregunta);
+        System.out.println("RESPUESTA Opcion:" + intCodOpcionPregunta);
+        System.out.println("USUARIO: " + jTextField_cod_usuario.getText());
         System.out.println("RESPUESTA OPCION: x");
         System.out.println("==============================================");
-        
+
         //Instanciar la Clase
         Respuesta_Opcion objRespOpcion = new Respuesta_Opcion(
-                intCodEncuesta, 
+                intCodEncuesta,
                 intCodPregunta,
                 intCodOpcionPregunta,
-                ClaseValidacion.getNumero(jTextField_cod_usuario.getText()), 
+                ClaseValidacion.getNumero(jTextField_cod_usuario.getText()),
                 "x");
-        
+
         try {
             //Enviar los datos a Capa de Datos - Objeto
             datosRecuperados.insertarRegistros(objRespOpcion);
-            
+
         } catch (ParseException ex) {
-            System.out.println("ERROR: "+ex);
+            System.out.println("ERROR: " + ex);
         }
 
         //Eliminar pregunta de Jtable PREGUNTA ============================
@@ -561,11 +564,12 @@ public class jframe_RealizarEncuesta extends javax.swing.JFrame {
             for (int i = 0; i < filasselec.length; i++) {
                 modelo.removeRow(filasselec[i]);
             }
-        } else {System.out.println("ERROR: ");}
+        } else {
+            System.out.println("ERROR: ");
+        }
         //Eliminar pregunta de Jtable PREGUNTA ============================
-        
-        
-        
+
+
     }//GEN-LAST:event_jButton_responderOpcionActionPerformed
 
     private void jButton_comenzarEncuestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_comenzarEncuestaActionPerformed
@@ -577,27 +581,30 @@ public class jframe_RealizarEncuesta extends javax.swing.JFrame {
     private void jButton_responderTextoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_responderTextoActionPerformed
         // TODO add your handling code here:
         System.out.println("==============================================");
-        System.out.println("RESPUESTA Encuesta: "+ intCodEncuesta);
-        System.out.println("RESPUESTA Pregunta: "+ intCodPregunta);
-        System.out.println("USUARIO: "+ jTextField_cod_usuario.getText());
-        System.out.println("RESPUESTA Texto:"+ jTextField_responderTexto.getText());
+        System.out.println("RESPUESTA Encuesta: " + intCodEncuesta);
+        System.out.println("RESPUESTA Pregunta: " + intCodPregunta);
+        System.out.println("USUARIO: " + jTextField_cod_usuario.getText());
+        System.out.println("RESPUESTA Texto:" + jTextField_responderTexto.getText());
         System.out.println("==============================================");
+
+        
+        String[] preguntaAbierta=new String[]{String.valueOf(intCodEncuesta),jTextField_responderTexto.getText()};
         
         //Instanciar la Clase
         Respuesta_Texto objRespTexto = new Respuesta_Texto(
-                intCodEncuesta, 
-                intCodPregunta, 
-                ClaseValidacion.getNumero(jTextField_cod_usuario.getText()), 
+                intCodEncuesta,
+                intCodPregunta,
+                ClaseValidacion.getNumero(jTextField_cod_usuario.getText()),
                 jTextField_responderTexto.getText());
-        
+
         try {
             //Enviar los datos a Capa de Datos - Objeto
             datosRecuperados.insertarRegistros(objRespTexto);
-            
+
         } catch (ParseException ex) {
-            System.out.println("ERROR: "+ex);
+            System.out.println("ERROR: " + ex);
         }
-        
+
         //Eliminar pregunta de Jtable PREGUNTA ============================
         DefaultTableModel modelo = (DefaultTableModel) jTable5.getModel();
         int fila = jTable5.getSelectedRow();
@@ -606,9 +613,11 @@ public class jframe_RealizarEncuesta extends javax.swing.JFrame {
             for (int i = 0; i < filasselec.length; i++) {
                 modelo.removeRow(filasselec[i]);
             }
-        } else {System.out.println("ERROR: ");}
+        } else {
+            System.out.println("ERROR: ");
+        }
         //Eliminar pregunta de Jtable PREGUNTA ============================
-        
+
         //Validar si esta Vacio el Jtable de PREGUNTA ===================
         if (this.jTable5.getRowCount() != 0 && this.jTable5.getSelectedRow() != 0) { // Condicion VACIO
         } else {
@@ -621,33 +630,29 @@ public class jframe_RealizarEncuesta extends javax.swing.JFrame {
         }
         jTextField_responderTexto.setEnabled(false);
         jButton_responderTexto.setEnabled(false);
-        
-        
+
+
     }//GEN-LAST:event_jButton_responderTextoActionPerformed
 
     private void jButton_terminarEncuestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_terminarEncuestaActionPerformed
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null, "AVISO:\n\nENCUESTA GUARDADA, GRACIAS..!!");
-        
+
         //Commit
         try {
             // TODO add your handling code here:
             datosRecuperados.startCommitRollback(true);
         } catch (SQLException ex) {
-            System.out.println("ERROR: "+ ex);
+            System.out.println("ERROR: " + ex);
         }
     }//GEN-LAST:event_jButton_terminarEncuestaActionPerformed
 
     private void jButton_siguienteOpcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_siguienteOpcionActionPerformed
         // TODO add your handling code here:
-        
+
         //Insertar las demas RESPUESTAS DE OPCION
-        
         //Instanciar la Clase
         //  Lista de OBJETOS y las recorro para Ingresar
-        
-        
-        
         //Eliminar pregunta de Jtable PREGUNTA ============================
         DefaultTableModel modelo = (DefaultTableModel) jTable5.getModel();
         int fila = jTable5.getSelectedRow();
@@ -656,9 +661,11 @@ public class jframe_RealizarEncuesta extends javax.swing.JFrame {
             for (int i = 0; i < filasselec.length; i++) {
                 modelo.removeRow(filasselec[i]);
             }
-        } else {System.out.println("ERROR: ");}
+        } else {
+            System.out.println("ERROR: ");
+        }
         //Eliminar pregunta de Jtable PREGUNTA ============================
-        
+
         //Validar si esta Vacio el Jtable de PREGUNTA ===================
         if (this.jTable5.getRowCount() != 0 && this.jTable5.getSelectedRow() != 0) { // Condicion VACIO
         } else {
@@ -669,7 +676,7 @@ public class jframe_RealizarEncuesta extends javax.swing.JFrame {
             jButton_siguienteOpcion.setEnabled(false);
             JOptionPane.showMessageDialog(null, "AVISO:\n\nPREGUNTAS TERMINADAS..!!");
         }
-        
+
     }//GEN-LAST:event_jButton_siguienteOpcionActionPerformed
 
     private void jButton_SALIRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_SALIRActionPerformed
@@ -679,97 +686,106 @@ public class jframe_RealizarEncuesta extends javax.swing.JFrame {
             // TODO add your handling code here:
             datosRecuperados.startCommitRollback(false);
         } catch (SQLException ex) {
-            System.out.println("ERROR: "+ ex);
+            System.out.println("ERROR: " + ex);
         }
         this.dispose();
-        
+
     }//GEN-LAST:event_jButton_SALIRActionPerformed
 
     private void jButton_buscarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_buscarUsuarioActionPerformed
         // TODO add your handling code here:
-        
-        jTextField_nombre_usuario.setEnabled(true);
-        jTextField_direccion_usuario.setEnabled(true);
-        jTextField_telefono_usuario.setEnabled(true);
-        jTextField_correo_usuario.setEnabled(true);
-        
+        String queery = "SELECT * FROM USUARIO WHERE cod_usuario='" + jTextField_cod_usuario.getText() + "'";
+        System.out.println("Consulta "+queery);
+        ObservableList<Object[]> registro = datosRecuperados.registros(queery, 5);
+        System.out.println("Consulta "+registro.size() );
+        if (registro.size() > 0) {
+            jTextField_nombre_usuario.setText(registro.get(2).toString());
+            jTextField_direccion_usuario.setText(registro.get(3).toString());
+            jTextField_telefono_usuario.setText(registro.get(4).toString());
+            jTextField_correo_usuario.setText(registro.get(5).toString());
+        } else {
+            jTextField_nombre_usuario.setEnabled(true);
+            jTextField_direccion_usuario.setEnabled(true);
+            jTextField_telefono_usuario.setEnabled(true);
+            jTextField_correo_usuario.setEnabled(true);
+        }
+
+
     }//GEN-LAST:event_jButton_buscarUsuarioActionPerformed
 
     private void jTextField_nombre_usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_nombre_usuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField_nombre_usuarioActionPerformed
-    
+
     //===========================================================================
     //MOSTRAR PREGUNTA
-    public void mostrarPregunta(int valorCodEncuesta){
+    public void mostrarPregunta(int valorCodEncuesta) {
         String ingresoTablaSelec = "PREGUNTA";
         String cadenaCamposAgregados = "COD_PREGUNTA, DESCRIPCION";
         camposEnJTable.add("COD_PREGUNTA");
         camposEnJTable.add("DESCRIPCION");
-        
+
         datosRecuperados.metaDatoTablasJtable();
-        
+
         try {
             //MOSTRAR PREGUNTA
             //Mostrar ANTES de consultar
             datosRecuperados.metaDatoCamposTablaJtable(ingresoTablaSelec);
-            System.out.println("\n===============\nSELECT "+cadenaCamposAgregados+" FROM " + ingresoTablaSelec + " WHERE COD_ENCUESTA = " + valorCodEncuesta+"\n===============\n");
+            System.out.println("\n===============\nSELECT " + cadenaCamposAgregados + " FROM " + ingresoTablaSelec + " WHERE COD_ENCUESTA = " + valorCodEncuesta + "\n===============\n");
             jTable5.setModel(datosRecuperados.consultarRegistrosJTable(cadenaCamposAgregados, ingresoTablaSelec, " WHERE COD_ENCUESTA = " + valorCodEncuesta));
-            
+
             //Seleccionar valores con Mause
             jTable5.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent e) {
                     int fila = jTable5.rowAtPoint(e.getPoint());
                     int columna = jTable5.columnAtPoint(e.getPoint());
                     if ((fila > -1) && (columna > -1)) {
-                        
-                        mostrarPreguntaOpciones(valorCodEncuesta,ClaseValidacion.getNumero((String)jTable5.getValueAt(fila, columna)));
+
+                        mostrarPreguntaOpciones(valorCodEncuesta, ClaseValidacion.getNumero((String) jTable5.getValueAt(fila, columna)));
                         //Obtener valor de codigo de encuesta
-                        intCodPregunta = ClaseValidacion.getNumero((String)jTable5.getValueAt(fila, columna));
+                        intCodPregunta = ClaseValidacion.getNumero((String) jTable5.getValueAt(fila, columna));
 //                        System.out.println("VALOR ELEGIDO DE OPCION: "+ intCodEncuesta);
                     }
                 }
             });
-            
-            
+
         } catch (SQLException ex) {
-            System.out.println("ERROR: "+ex);
+            System.out.println("ERROR: " + ex);
         }
         camposEnJTable.clear();
-        
+
     }
-    
+
     //MOSTRAR OPCIONES
-    public void mostrarPreguntaOpciones(int valorCodEncuesta, int valorCodPregunta){
+    public void mostrarPreguntaOpciones(int valorCodEncuesta, int valorCodPregunta) {
         String ingresoTablaSelec = "P_OPMULTIPLE";
         String cadenaCamposAgregados = "COD_OPC_MULTIPLE, DESC_OPCION";
         camposEnJTable.add("COD_OPC_MULTIPLE");
         camposEnJTable.add("DESC_OPCION");
-        
+
         datosRecuperados.metaDatoTablasJtable();
-        
+
         try {
             //MOSTRAR OPCIONES
             //Mostrar ANTES de consultar
             datosRecuperados.metaDatoCamposTablaJtable(ingresoTablaSelec);
-            System.out.println("\n===============\nSELECT "+cadenaCamposAgregados+" FROM " + ingresoTablaSelec + " WHERE COD_ENCUESTA = " + valorCodEncuesta + " AND COD_PREGUNTA = " +valorCodPregunta+"\n===============\n");
-            
-            jTable4.setModel(datosRecuperados.consultarRegistrosJTable(cadenaCamposAgregados, ingresoTablaSelec, " WHERE COD_ENCUESTA = " + valorCodEncuesta + " AND COD_PREGUNTA = " +valorCodPregunta));
+            System.out.println("\n===============\nSELECT " + cadenaCamposAgregados + " FROM " + ingresoTablaSelec + " WHERE COD_ENCUESTA = " + valorCodEncuesta + " AND COD_PREGUNTA = " + valorCodPregunta + "\n===============\n");
+
+            jTable4.setModel(datosRecuperados.consultarRegistrosJTable(cadenaCamposAgregados, ingresoTablaSelec, " WHERE COD_ENCUESTA = " + valorCodEncuesta + " AND COD_PREGUNTA = " + valorCodPregunta));
             //Seleccionar valores con Mause - Envia el valor a TERMINAR ENCUESTA
             jTable4.addMouseListener(new MouseAdapter() {
                 public void mouseClicked(MouseEvent e) {
                     int fila = jTable4.rowAtPoint(e.getPoint());
                     int columna = jTable4.columnAtPoint(e.getPoint());
                     if ((fila > -1) && (columna > -1)) {
-                        
+
                         //Obtener valor de codigo de pregunta
                         intCodOpcionPregunta = ClaseValidacion.getNumero((String) jTable4.getValueAt(fila, columna));
 //                        System.out.println("VALOR ELEGIDO DE OPCION: "+ intCodPregunta);
                     }
                 }
             });
-            
-            
+
             //Validar si esta Vacio el Jtable de Op Multiple ===================
             if (this.jTable4.getRowCount() != 0 && this.jTable4.getSelectedRow() != 0) { // Condicion VACIO
                 jTextField_responderTexto.setEnabled(false);
@@ -782,34 +798,33 @@ public class jframe_RealizarEncuesta extends javax.swing.JFrame {
                 jButton_responderOpcion.setEnabled(false);
                 jButton_siguienteOpcion.setEnabled(false);
             }
-            
+
         } catch (SQLException ex) {
-            System.out.println("ERROR: "+ex);
+            System.out.println("ERROR: " + ex);
         }
         camposEnJTable.clear();
-        
+
     }
-    
+
     //===========================================================================
-    
     //ACTIVAR PARA LLENAR LA ENCUESTA
-    public void activarIniciodeEncuesta(){
+    public void activarIniciodeEncuesta() {
         //Deshabilirar Botones y Jtexts
         jTextField_cod_usuario.setEnabled(false);
         jTextField_nombre_usuario.setEnabled(false);
         jTextField_direccion_usuario.setEnabled(false);
         jTextField_telefono_usuario.setEnabled(false);
-         jTextField_correo_usuario.setEnabled(false);
+        jTextField_correo_usuario.setEnabled(false);
         jButton_ingresarEncuesta.setEnabled(false);
-        
+
         //Activar JTable de Encuestas
         String ingresoTablaSelec = "ENCUESTA";
         String cadenaCamposAgregados = "COD_ENCUESTA, NOMBRE";
         camposEnJTable.add("COD_ENCUESTA");
         camposEnJTable.add("NOMBRE");
-        
+
         datosRecuperados.metaDatoTablasJtable();
-        
+
         try {
             //MOSTRAR ENCUESTAS
             //Mostrar ANTES de consultar
@@ -823,22 +838,22 @@ public class jframe_RealizarEncuesta extends javax.swing.JFrame {
                     int fila = jTable3.rowAtPoint(e.getPoint());
                     int columna = jTable3.columnAtPoint(e.getPoint());
                     if ((fila > -1) && (columna > -1)) {
-                        
-                        mostrarPregunta(ClaseValidacion.getNumero((String)jTable3.getValueAt(fila, columna)));
-                        intCodEncuesta = ClaseValidacion.getNumero((String)jTable3.getValueAt(fila, columna));
+
+                        mostrarPregunta(ClaseValidacion.getNumero((String) jTable3.getValueAt(fila, columna)));
+                        intCodEncuesta = ClaseValidacion.getNumero((String) jTable3.getValueAt(fila, columna));
 //                        System.out.println("VALOR ELEGIDO DE OPCION: "+ intCodEncuesta);
-                    
+
                     }
                 }
             });
-            
+
         } catch (SQLException ex) {
-            System.out.println("ERR: "+ex.getMessage());
+            System.out.println("ERR: " + ex.getMessage());
         }
         camposEnJTable.clear();
         jButton_comenzarEncuesta.setEnabled(true);
     }
-    
+
     /**
      * @param args the command line arguments
      */

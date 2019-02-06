@@ -547,7 +547,7 @@ public class jframe_ManejoUsuario extends javax.swing.JFrame {
         jTextField_direccion_usuario2.setEnabled(true);
         jTextField_nombre_usuario2.setEnabled(true);
         jTextField_telefono_usuario2.setEnabled(true);
-         jTextField_correo_usuario2.setEnabled(true);
+        jTextField_correo_usuario2.setEnabled(true);
     }//GEN-LAST:event_jButton_buscarModificarActionPerformed
 
     private void jButton_actualizarRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_actualizarRegistroActionPerformed

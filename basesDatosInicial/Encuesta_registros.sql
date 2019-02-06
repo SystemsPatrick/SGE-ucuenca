@@ -1,6 +1,6 @@
 
-INSERT INTO USUARIO VALUES (1717226201,'Jhon','Av. Loja y 10 de Agosto','2475034','patricio.fajardo96@ucuenca.edu.ec');
-INSERT INTO USUARIO VALUES (1234,'Maribel','Totoracocha','2475034','patricio.fajardo96@ucuenca.edu.ec');
+INSERT INTO USUARIO VALUES ('0106243751','Jhon','Av. Loja y 10 de Agosto','2475034','patricio.fajardo96@ucuenca.edu.ec');
+INSERT INTO USUARIO VALUES ('0106243869','Maribel','Totoracocha','2475034','patricio.fajardo96@ucuenca.edu.ec');
 
 INSERT INTO TIPO_ENCUESTA VALUES (1,'Marketing');
 INSERT INTO TIPO_ENCUESTA VALUES (2,'Seguridad de Datos');

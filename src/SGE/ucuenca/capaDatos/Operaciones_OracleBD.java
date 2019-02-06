@@ -223,42 +223,7 @@ public class Operaciones_OracleBD {
         }
         return valido;
 
-        //NUEVO DELETE ========================================================
-//        if (cn == null) {
-//            System.out.println("ESTA NULL");
-//        } else {
-//            System.out.println("NO ESTA NULL");
-//            try {
-//                pst = cn.prepareStatement("DELETE FROM "+objeto.getClass().getSimpleName().toUpperCase()+" WHERE COD_USUARIO = ?");
-//                
-//                //Obtener Campos del Objeto
-//                Field[] campos = objeto.getClass().getDeclaredFields();
-//
-//                for (int i = 0; i < campos.length; i++) {
-//                    String fieldName = campos[i].getName();
-//                    if (fieldName.toUpperCase().compareToIgnoreCase(campo_clave) == 0) {
-//                        System.out.println("Nombre Campo: " + fieldName.toUpperCase());
-//                        System.out.println("Nombre Campo Comparar: " + campo_clave);
-//                        //Compara el tipo de dato del campo
-//                        if (campos[i].getType().toString().toUpperCase().contains("STRING")) {
-//                            //Obtener Valores de los Campos del Objeto
-//                            System.out.println("Valor Campo: " + gs.callGetter(objeto, fieldName));
-//                            pst.setString(i+1, (String)gs.callGetter(objeto, fieldName));
-//                        }
-//                        if (campos[i].getType().toString().toUpperCase().contains("INT")) {
-//                            //Obtener Valores de los Campos del Objeto
-//                            System.out.println("Valor Campo: " + gs.callGetter(objeto, fieldName));
-//                            pst.setInt(i+1, (Integer)gs.callGetter(objeto, fieldName));
-//                        }
-//                    }
-//                }
-//                
-//                pst.executeUpdate();
-//                System.out.println("========    ELIMINAR ========");
-//            } catch (SQLException ex) {
-//                Logger.getLogger(Operaciones_OracleBD.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
+        
     }
 
     //Terminado
@@ -358,31 +323,7 @@ public class Operaciones_OracleBD {
         }
         return valido;
 
-        //NUEVO UPDATE ========================================================
-        //Usuario
-//        if (objeto.getClass().getSimpleName().equalsIgnoreCase("USUARIO")){
-//            Usuario user = (Usuario) objeto;
-//            //Pasar valores a Base de Datos
-//            if (cn == null) {
-//                System.out.println("ESTA NULL");
-//            } else {
-//                System.out.println("NO ESTA NULL");
-//                try {
-//                    
-//                    pst = cn.prepareStatement("UPDATE USUARIO SET NOMBRE = ?, DIRECCION = ?, TELEFONO = ? WHERE COD_USUARIO = ?");
-//                    
-//                    pst.setString(1, user.getNombre());
-//                    pst.setString(2, user.getDireccion());
-//                    pst.setString(3, user.getTelefono());
-//                    pst.setString(4, user.getCod_usuario());
-//                    
-//                    pst.executeUpdate();
-//                    System.out.println("========    ACTUALIZAR ========");
-//                } catch (SQLException ex) {
-//                    Logger.getLogger(Operaciones_OracleBD.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            }
-//        }
+        
     }
 
     //============================================================================
