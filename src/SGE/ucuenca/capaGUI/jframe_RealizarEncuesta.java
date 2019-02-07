@@ -716,10 +716,17 @@ public class jframe_RealizarEncuesta extends javax.swing.JFrame {
 
     private void jButton_buscarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_buscarUsuarioActionPerformed
         // TODO add your handling code here:
-
-        jTextField_direccion_usuario.setEnabled(true);
-        jTextField_telefono_usuario.setEnabled(true);
-        jTextField_correo_usuario.setEnabled(true);
+        
+        //Validacion de CEDULA
+        Operaciones_OracleBD var = new Operaciones_OracleBD();
+        if (var.proced_validacionCedula(jTextField_cod_usuario.getText()) == 0) {
+            int result = JOptionPane.showConfirmDialog(null, "MENSAJE: \n\nCEDULA INCORRECTA", "Aviso!", JOptionPane.OK_CANCEL_OPTION);
+        } else {
+            int result = JOptionPane.showConfirmDialog(null, "MENSAJE: \n\nCEDULA CORRECTA - COMPLETE SU REGISTRO", "Aviso!", JOptionPane.OK_CANCEL_OPTION);
+            jTextField_direccion_usuario.setEnabled(true);
+            jTextField_telefono_usuario.setEnabled(true);
+            jTextField_correo_usuario.setEnabled(true);
+        }
 
     }//GEN-LAST:event_jButton_buscarUsuarioActionPerformed
 
