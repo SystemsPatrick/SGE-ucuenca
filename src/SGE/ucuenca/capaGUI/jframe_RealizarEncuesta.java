@@ -544,11 +544,11 @@ public class jframe_RealizarEncuesta extends javax.swing.JFrame {
 
         
          //llenado vector de la s preguntas que el usuario responde
-        String[] preguntaAbierta = new String[]{String.valueOf(intCodEncuesta),
-            (String) jTable5.getValueAt(jTable5.getSelectedRow(), 1),
-            jTextField_responderTexto.getText()};
-
-        datoConstetadoEncuesta.add(preguntaAbierta);
+//        String[] preguntaAbierta = new String[]{String.valueOf(intCodEncuesta),
+//            (String) jTable5.getValueAt(jTable5.getSelectedRow(), 1),
+//            jTextField_responderTexto.getText()};
+//
+//        datoConstetadoEncuesta.add(preguntaAbierta);
         
         //Instanciar la Clase
         Respuesta_Opcion objRespOpcion = new Respuesta_Opcion(
@@ -597,12 +597,12 @@ public class jframe_RealizarEncuesta extends javax.swing.JFrame {
         System.out.println("RESPUESTA Texto:" + jTextField_responderTexto.getText());
         System.out.println("==============================================");
 
-        String[] preguntaOpcionM = new String[]{String.valueOf(intCodEncuesta),
-            (String) jTable5.getValueAt(jTable5.getSelectedRow(), 1),
-            (String) jTable4.getValueAt(jTable4.getSelectedRow(), 0),
-            (String) jTable4.getValueAt(jTable4.getSelectedRow(), 1)};
-
-        datoConstetadoEncuesta.add(preguntaOpcionM);
+//        String[] preguntaOpcionM = new String[]{String.valueOf(intCodEncuesta),
+//            (String) jTable5.getValueAt(jTable5.getSelectedRow(), 1),
+//            (String) jTable4.getValueAt(jTable4.getSelectedRow(), 0),
+//            (String) jTable4.getValueAt(jTable4.getSelectedRow(), 1)};
+//
+//        datoConstetadoEncuesta.add(preguntaOpcionM);
         
         //Instanciar la Clase
         Respuesta_Texto objRespTexto = new Respuesta_Texto(
@@ -632,11 +632,8 @@ public class jframe_RealizarEncuesta extends javax.swing.JFrame {
         }
         //Eliminar pregunta de Jtable PREGUNTA ============================
 
-        
-        //Procedimiento de Validar Respuesta TEXTO o Numerico
         Operaciones_OracleBD var = new Operaciones_OracleBD();
-        var.proced_validaRespuesta(String.valueOf(preguntaOpcionM), Integer.toString(intCodPregunta), jTextField_cod_usuario.getText(), jTextField_responderTexto.getText());
-        //Procedimiento de Validar Respuesta TEXTO o Numerico
+        var.proced_validaRespuesta(String.valueOf(intCodEncuesta), String.valueOf(intCodPregunta), jTextField_cod_usuario.getText(), jTextField_responderTexto.getText());
         
         
         //Validar si esta Vacio el Jtable de PREGUNTA ===================
