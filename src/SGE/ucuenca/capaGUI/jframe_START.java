@@ -5,6 +5,11 @@
  */
 package SGE.ucuenca.capaGUI;
 
+import SGE.ucuenca.capaDatos.Operaciones_OracleBD;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Jhon
@@ -17,6 +22,23 @@ public class jframe_START extends javax.swing.JFrame {
     public jframe_START() {
         initComponents();
         setLocationRelativeTo(null);
+        
+        
+        
+        //Test de Validacion
+        Operaciones_OracleBD var = new Operaciones_OracleBD();
+        try {
+            if (var.proced_validacionCedula("1717226201") == 0) {
+                System.out.println("CEDULA INCORRECTA");
+            } else {
+                System.out.println("VALIDASASO MEN..!!");
+            }
+
+        } catch (ParseException ex) {
+            Logger.getLogger(jframe_START.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
     }
 
     //TEST A GITHUB
