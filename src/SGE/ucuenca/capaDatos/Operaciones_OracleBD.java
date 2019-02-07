@@ -937,6 +937,9 @@ public class Operaciones_OracleBD {
         return aux_lista;
     }
     
+    //=========================================================================
+    //  MANEJO DE TRIGGERS y PROCEDIMIENTOS
+    //=========================================================================
     //Obtener Registros de Conexiones de ENCUESTA_DB
     public Object[] recuperarRegistros() {
         List<String> aux_listaUsuario = null;
