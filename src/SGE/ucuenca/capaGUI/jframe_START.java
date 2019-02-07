@@ -27,16 +27,15 @@ public class jframe_START extends javax.swing.JFrame {
         
         //Test de Validacion
         Operaciones_OracleBD var = new Operaciones_OracleBD();
-        try {
-            if (var.proced_validacionCedula("1717226201") == 0) {
-                System.out.println("CEDULA INCORRECTA");
-            } else {
-                System.out.println("VALIDASASO MEN..!!");
-            }
-
-        } catch (ParseException ex) {
-            System.out.println("ERROR_EX_VALIDACION: "+ ex.getMessage());
+        if (var.proced_validacionCedula("1794209964") == 0) {
+            System.out.println("CEDULA INCORRECTA");
+        } else {
+            System.out.println("VALIDASASO MEN..!!");
         }
+        
+        //Test de ADD_USUARIO_ENCUESTA
+        System.out.println("VALOR RETORNO: "+ var.proced_add_datos_usuario_encuesta("1717226201", "1"));
+        
         
         
     }
