@@ -1117,11 +1117,8 @@ public class Operaciones_OracleBD {
             System.out.println("NO ESTA NULL: PROC_NO");
             try {
                 pst = cn.prepareStatement("CALL validarCedulaUsuario(?,?)");
-                
                 pst.setString(1, aux_cedula);
-                pst.setInt(1, valorRetorno);
-                
-                
+                pst.setInt(2, valorRetorno);
                 pst.executeUpdate();
                 System.out.println("========    Procedimiento validarCedulaUsuario ========");
                 
