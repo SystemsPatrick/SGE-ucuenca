@@ -864,7 +864,6 @@ public class Operaciones_OracleBD {
     public void quitarPrivilegios(String aux_privilegios, String aux_usuarioSelec) {
         try {
             selectStringQuery = "";
-//            cn = con.Conectar(jframe_administrarUsuarios.getUsuario(), jframe_administrarUsuarios.getContraseña());
             sql = cn.createStatement();
             selectStringQuery = "REVOKE " + aux_privilegios + " FROM " + aux_usuarioSelec;
             System.out.println("Asisgar privilegios: " + selectStringQuery);
