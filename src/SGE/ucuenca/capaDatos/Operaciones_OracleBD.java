@@ -734,6 +734,9 @@ public class Operaciones_OracleBD {
                 rs = sql.executeQuery(rolToTablas);
                 rolToTablas = "GRANT insert, delete, update, select ON P_OPMULTIPLE TO " + nuevoUsuario;
                 rs = sql.executeQuery(rolToTablas);
+                //ROL DE VISTAS
+//                rolToTablas = "GRANT insert, delete, update, select ON P_OPMULTIPLE TO " + nuevoUsuario;
+//                rs = sql.executeQuery(rolToTablas);
             }
             if (valorSelectRol == 2) {
                 //GRANT create session, insert, select TO rol_cliente;
