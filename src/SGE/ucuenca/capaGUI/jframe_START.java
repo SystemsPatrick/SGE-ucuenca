@@ -22,22 +22,6 @@ public class jframe_START extends javax.swing.JFrame {
     public jframe_START() {
         initComponents();
         setLocationRelativeTo(null);
-        
-        
-        
-        //Test de Validacion
-        Operaciones_OracleBD var = new Operaciones_OracleBD();
-        if (var.proced_validacionCedula("1717226201") == 0) {
-            System.out.println("CEDULA INCORRECTA");
-        } else {
-            System.out.println("VALIDASASO MEN..!!");
-        }
-        
-        //Test de ADD_USUARIO_ENCUESTA
-        System.out.println("VALOR RETORNO: "+ var.proced_add_datos_usuario_encuesta("1717226201", "1"));
-        
-        
-        
     }
 
     //TEST A GITHUB
