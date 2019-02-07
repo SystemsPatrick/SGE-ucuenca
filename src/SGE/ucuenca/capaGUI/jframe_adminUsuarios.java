@@ -86,8 +86,7 @@ public class jframe_adminUsuarios extends javax.swing.JFrame {
         jScrollPane7 = new javax.swing.JScrollPane();
         jList_listaPrivideRol = new javax.swing.JList<>();
         jLabel14 = new javax.swing.JLabel();
-        jButton_privilegiosObjetos = new javax.swing.JButton();
-        jButton_privilegiosObjetos1 = new javax.swing.JButton();
+        jButton_configPrivilegiosObjetosRoles = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -183,7 +182,7 @@ public class jframe_adminUsuarios extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jPasswordField_contraseñaNuevoUsuario))
+                                .addComponent(jPasswordField_contraseñaNuevoUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -487,17 +486,10 @@ public class jframe_adminUsuarios extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jButton_privilegiosObjetos.setText("Privilegios a Objetos");
-        jButton_privilegiosObjetos.addActionListener(new java.awt.event.ActionListener() {
+        jButton_configPrivilegiosObjetosRoles.setText("Configuracion de Privilegios a Objetos y Roles");
+        jButton_configPrivilegiosObjetosRoles.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_privilegiosObjetosActionPerformed(evt);
-            }
-        });
-
-        jButton_privilegiosObjetos1.setText("Gestor de Roles");
-        jButton_privilegiosObjetos1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_privilegiosObjetos1ActionPerformed(evt);
+                jButton_configPrivilegiosObjetosRolesActionPerformed(evt);
             }
         });
 
@@ -509,20 +501,17 @@ public class jframe_adminUsuarios extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(146, 146, 146)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton_privilegiosObjetos))
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton_privilegiosObjetos1))
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 28, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton_configPrivilegiosObjetosRoles, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(30, 30, 30))))
         );
         layout.setVerticalGroup(
@@ -535,8 +524,7 @@ public class jframe_adminUsuarios extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
-                    .addComponent(jButton_privilegiosObjetos)
-                    .addComponent(jButton_privilegiosObjetos1))
+                    .addComponent(jButton_configPrivilegiosObjetosRoles))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(22, Short.MAX_VALUE))
@@ -804,15 +792,10 @@ public class jframe_adminUsuarios extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jRadioButton_adminMouseClicked
 
-    private void jButton_privilegiosObjetosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_privilegiosObjetosActionPerformed
+    private void jButton_configPrivilegiosObjetosRolesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_configPrivilegiosObjetosRolesActionPerformed
         
         
-    }//GEN-LAST:event_jButton_privilegiosObjetosActionPerformed
-
-    private void jButton_privilegiosObjetos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_privilegiosObjetos1ActionPerformed
-        
-        
-    }//GEN-LAST:event_jButton_privilegiosObjetos1ActionPerformed
+    }//GEN-LAST:event_jButton_configPrivilegiosObjetosRolesActionPerformed
 
     private void jRadioButton_clienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButton_clienteMouseClicked
         
@@ -899,11 +882,10 @@ public class jframe_adminUsuarios extends javax.swing.JFrame {
     private javax.swing.JButton jButton_actualizarPrivAsign;
     private javax.swing.JButton jButton_actualizarPrivRev;
     private javax.swing.JButton jButton_asignarPrivilegios;
+    private javax.swing.JButton jButton_configPrivilegiosObjetosRoles;
     private javax.swing.JButton jButton_crearUsuario;
     private javax.swing.JButton jButton_eliminarUsuario;
     private javax.swing.JButton jButton_modificarUsuario;
-    private javax.swing.JButton jButton_privilegiosObjetos;
-    private javax.swing.JButton jButton_privilegiosObjetos1;
     private javax.swing.JButton jButton_revocarPrivilegios;
     private javax.swing.JCheckBox jCheckBox_asignar;
     private javax.swing.JCheckBox jCheckBox_revocar;
