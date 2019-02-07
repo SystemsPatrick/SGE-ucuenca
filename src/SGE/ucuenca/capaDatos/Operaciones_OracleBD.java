@@ -12,6 +12,7 @@ import static SGE.ucuenca.capaGUI.jframe_GestorConsultas.jTable_visualizarRegist
 import SGE.ucuenca.capaGUI.jframe_STARTEncuesta;
 import SGE.ucuenca.capaGUI.jframe_RealizarEncuesta;
 import java.lang.reflect.Field;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
@@ -19,6 +20,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -1116,15 +1118,19 @@ public class Operaciones_OracleBD {
         } else {
             System.out.println("NO ESTA NULL: PROC_NO");
             try {
-                pst = cn.prepareStatement("CALL validarCedulaUsuario(?,?)");
-                pst.setString(1, aux_cedula);
-                pst.setInt(2, valorRetorno);
-                pst.executeUpdate();
-                System.out.println("========    Procedimiento validarCedulaUsuario ========");
+                CallableStatement cStmt = cn.prepareCall("{call validarCedulaUsuario(?, ?)}");
+                cStmt.setString(1, aux_cedula);
+                cStmt.registerOutParameter(2, Types.INTEGER);
+                cStmt.execute();
                 
+                int valorResultado = cStmt.getInt(2);
+                System.out.println("DATO OBTENIDO PROCEDIM: ======== : "+ valorResultado);
+                cStmt.close();
+                valorRetorno = valorResultado;
                 return valorRetorno;
+                
             } catch (SQLException ex) {
-                System.out.println("NOTA PROC VALIDACION::: " + ex.getMessage());
+                System.out.println("NOTA PROC VALIDACION::: " + ex);
                 return 0;
             }
         }
