@@ -441,8 +441,14 @@ public class jframe_ManejoEncuesta extends javax.swing.JFrame {
                 Operaciones_OracleBD var = new Operaciones_OracleBD();
                 
             
+                
+                
+                
 //                System.out.println("VALOR RETORNO: " + var.proced_add_datos_usuario_encuesta("1717226201", jTextField_cod_emcuesta1.getText()));
             
+
+
+
             
             }
             
