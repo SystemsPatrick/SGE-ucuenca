@@ -27,7 +27,7 @@ public class jframe_START extends javax.swing.JFrame {
         
         //Test de Validacion
         Operaciones_OracleBD var = new Operaciones_OracleBD();
-        if (var.proced_validacionCedula("1794209964") == 0) {
+        if (var.proced_validacionCedula("1717226201") == 0) {
             System.out.println("CEDULA INCORRECTA");
         } else {
             System.out.println("VALIDASASO MEN..!!");
