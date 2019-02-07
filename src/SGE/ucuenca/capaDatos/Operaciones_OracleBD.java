@@ -336,8 +336,7 @@ public class Operaciones_OracleBD {
         // Colocar en el Mapa (Inicializo)
         mapaTablas = new HashMap<String, ArrayList<String>>();
         //Inicio de Metadato - Tablas
-//        cn = con.Conectar("USUARIO_ADMIN1", "1234"); // "HR", "1234" //"usuario_jhon", "1234"
-        DatabaseMetaData metaDatos;
+        cn = con.Conectar("ENCUESTA_DB", "12345");
         try {
             aux_lista = new ArrayList<String>();
             //Crea el objeto Statement
