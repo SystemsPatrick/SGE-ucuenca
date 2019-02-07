@@ -1123,14 +1123,13 @@ public class Operaciones_OracleBD {
                 cStmt.registerOutParameter(2, Types.INTEGER);
                 cStmt.execute();
                 
-                int valorResultado = cStmt.getInt(2);
-                System.out.println("DATO OBTENIDO PROCEDIM: ======== : "+ valorResultado);
+                valorRetorno = cStmt.getInt(2);
+                System.out.println("RETORNO_VALIDACION: ======== : "+ valorRetorno);
                 cStmt.close();
-                valorRetorno = valorResultado;
                 return valorRetorno;
                 
             } catch (SQLException ex) {
-                System.out.println("NOTA PROC VALIDACION::: " + ex);
+                System.out.println("ERROR PROC VALIDACION::: " + ex);
                 return 0;
             }
         }
@@ -1138,26 +1137,30 @@ public class Operaciones_OracleBD {
     }
     
     //Procedimiento para Validar la Cedula
-    public String proced_add_datos_usuario_encuesta(String aux_cod_usuario, String aux_cod_encuesta) {
+    public int proced_add_datos_usuario_encuesta(String aux_cod_usuario, String aux_cod_encuesta) {
         
-        String valorRetorno = "";
+        int valorRetorno = 0;
         cn = con.Conectar("ENCUESTA_DB", "12345");
         if (cn == null) {
             System.out.println("ESTA NULL");
         } else {
             System.out.println("NO ESTA NULL: PROC_");
             try {
-                pst = cn.prepareStatement("CALL add_datos_usuario_encuesta(?,?,?)");
-                pst.setString(1, aux_cod_usuario);
-                pst.setString(2, aux_cod_encuesta);
-                pst.setString(3, valorRetorno);
-                pst.executeUpdate();
-                System.out.println("========    Procedimiento proced_add_datos_usuario_encuesta ========");
+                
+                CallableStatement cStmt = cn.prepareCall("{call add_datos_usuario_encuesta(?,?,?)}");
+                cStmt.setString(1, aux_cod_usuario);
+                cStmt.setString(2, aux_cod_encuesta);
+                cStmt.registerOutParameter(3, Types.INTEGER);
+                cStmt.execute();
+                
+                valorRetorno = cStmt.getInt(3);
+                System.out.println("RETORNO_ADD_DATOS: ======== : "+ valorRetorno);
+                cStmt.close();
                 
                 return valorRetorno;
             } catch (SQLException ex) {
                 System.out.println("NOTA PROC ADD_USER_ENCUESTA::: " + ex.getMessage());
-                return "";
+                return 0;
             }
         }
         return valorRetorno;   
