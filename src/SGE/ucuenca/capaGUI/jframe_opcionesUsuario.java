@@ -84,7 +84,7 @@ public class jframe_opcionesUsuario extends javax.swing.JFrame {
         jLabel_nombreUsuario1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
