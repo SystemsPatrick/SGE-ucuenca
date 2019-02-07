@@ -1110,10 +1110,10 @@ public class Operaciones_OracleBD {
     public int proced_validacionCedula(String aux_cedula) throws ParseException {
         
         int valorRetorno = 0;
+        cn = con.Conectar("ENCUESTA_DB", "12345");
         if (cn == null) {
             System.out.println("ESTA NULL");
         } else {
-            cn = con.Conectar("ENCUESTA_DB", "12345");
             System.out.println("NO ESTA NULL: PROC_NO");
             try {
                 pst = cn.prepareStatement("CALL validarCedulaUsuario(?,?)");
