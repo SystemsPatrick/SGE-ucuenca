@@ -1039,6 +1039,7 @@ public class Operaciones_OracleBD {
         return valido;   
     }
 
+    //Procedimiento para Contraseña
     public boolean ejecutar_procPassword(String aux_password) throws ParseException {
         
         boolean valido = true;
@@ -1077,6 +1078,7 @@ public class Operaciones_OracleBD {
         return valido;   
     }
     
+    //Uso de insertar() para Registros Conexiones
     public void metodo_interno(){
         Object[] vector = recuperarRegistros();
         System.out.println("--->"+vector);
@@ -1104,10 +1106,5 @@ public class Operaciones_OracleBD {
         }
     }
     
-    //=========================================================================
-    //  MANEJO DE OBJETOS
-    //=========================================================================
-    //=========================================================================
-    //  MANEJO DE ROLES
-    //=========================================================================
+    
 }
