@@ -35,7 +35,7 @@ public class jframe_START extends javax.swing.JFrame {
             }
 
         } catch (ParseException ex) {
-            Logger.getLogger(jframe_START.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("ERROR_EX_VALIDACION: "+ ex.getMessage());
         }
         
         
