@@ -1107,7 +1107,7 @@ public class Operaciones_OracleBD {
     }
     
     //Procedimiento para Validar la Cedula
-    public int proced_validacionCedula(String aux_cedula) throws ParseException {
+    public int proced_validacionCedula(String aux_cedula) {
         
         int valorRetorno = 0;
         cn = con.Conectar("ENCUESTA_DB", "12345");
@@ -1122,22 +1122,6 @@ public class Operaciones_OracleBD {
                 pst.executeUpdate();
                 System.out.println("========    Procedimiento validarCedulaUsuario ========");
                 
-                
-                //Consulta para NumRegistros
-                sql = cn.createStatement();
-                selectStringQuery = "select * from intentos_password";
-                rs = sql.executeQuery(selectStringQuery);
-                int contador_procPassword = 0;
-                while (rs.next()) {
-                    contador_procPassword++;
-                }
-                metodo_interno();
-                //Actualizar la CLave
-                pst = cn.prepareStatement("UPDATE Intentos_Password SET cod_intentosPasw = ? where cod_intentosPasw = ?");
-                pst.setInt(1, contador_procPassword);
-                pst.setInt(2, 0);
-                pst.executeUpdate();
-                
                 return valorRetorno;
             } catch (SQLException ex) {
                 System.out.println("NOTA PROC VALIDACION::: " + ex.getMessage());
@@ -1147,6 +1131,30 @@ public class Operaciones_OracleBD {
         return valorRetorno;   
     }
     
-    
+    //Procedimiento para Validar la Cedula
+    public String proced_add_datos_usuario_encuesta(String aux_cod_usuario, String aux_cod_encuesta) {
+        
+        String valorRetorno = "";
+        cn = con.Conectar("ENCUESTA_DB", "12345");
+        if (cn == null) {
+            System.out.println("ESTA NULL");
+        } else {
+            System.out.println("NO ESTA NULL: PROC_");
+            try {
+                pst = cn.prepareStatement("CALL add_datos_usuario_encuesta(?,?,?)");
+                pst.setString(1, aux_cod_usuario);
+                pst.setString(2, aux_cod_encuesta);
+                pst.setString(3, valorRetorno);
+                pst.executeUpdate();
+                System.out.println("========    Procedimiento proced_add_datos_usuario_encuesta ========");
+                
+                return valorRetorno;
+            } catch (SQLException ex) {
+                System.out.println("NOTA PROC ADD_USER_ENCUESTA::: " + ex.getMessage());
+                return "";
+            }
+        }
+        return valorRetorno;   
+    }
     
 }
