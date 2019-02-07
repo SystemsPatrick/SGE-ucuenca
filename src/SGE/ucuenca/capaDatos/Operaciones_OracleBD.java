@@ -1173,4 +1173,28 @@ public class Operaciones_OracleBD {
         return valorRetorno;   
     }
     
+    //Procedimiento para Validar Respuesta Numerica
+    public void proced_validaRespuesta(String aux_cod_encuesta, String aux_cod_pregunta, String aux_cod_usuario, String aux_respuesta) {
+        
+//        cn = con.Conectar("ENCUESTA_DB", "12345");
+        if (cn == null) {
+            System.out.println("ESTA NULL");
+        } else {
+            System.out.println("NO ESTA NULL: PROC_validaRespuesta");
+            try {
+                
+                CallableStatement cStmt = cn.prepareCall("{call ENCUESTA_DB.VALIDARRESPUESTA(?,?,?,?)}");
+                cStmt.setString(1, aux_cod_encuesta);
+                cStmt.setString(2, aux_cod_pregunta);
+                cStmt.setString(3, aux_cod_usuario);
+                cStmt.setString(4, aux_respuesta);
+                cStmt.execute();
+                cStmt.close();
+                
+            } catch (SQLException ex) {
+                System.out.println("ERROR: PROC validaRespuesta::: " + ex.getMessage());
+            }
+        }  
+    }
+    
 }
