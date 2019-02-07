@@ -1116,13 +1116,13 @@ public class Operaciones_OracleBD {
     public int proced_validacionCedula(String aux_cedula) {
         
         int valorRetorno = 0;
-        cn = con.Conectar("ENCUESTA_DB", "12345");
+//        cn = con.Conectar("ENCUESTA_DB", "12345");
         if (cn == null) {
             System.out.println("ESTA NULL");
         } else {
             System.out.println("NO ESTA NULL: PROC_NO");
             try {
-                CallableStatement cStmt = cn.prepareCall("{call validarCedulaUsuario(?, ?)}");
+                CallableStatement cStmt = cn.prepareCall("{call ENCUESTA_DB.validarCedulaUsuario(?, ?)}");
                 cStmt.setString(1, aux_cedula);
                 cStmt.registerOutParameter(2, Types.INTEGER);
                 cStmt.execute();
@@ -1144,14 +1144,14 @@ public class Operaciones_OracleBD {
     public int proced_add_datos_usuario_encuesta(String aux_cod_usuario, String aux_cod_encuesta) {
         
         int valorRetorno = 0;
-        cn = con.Conectar("ENCUESTA_DB", "12345");
+//        cn = con.Conectar("ENCUESTA_DB", "12345");
         if (cn == null) {
             System.out.println("ESTA NULL");
         } else {
             System.out.println("NO ESTA NULL: PROC_");
             try {
                 
-                CallableStatement cStmt = cn.prepareCall("{call add_datos_usuario_encuesta(?,?,?)}");
+                CallableStatement cStmt = cn.prepareCall("{call ENCUESTA_DB.add_datos_usuario_encuesta(?,?,?)}");
                 cStmt.setString(1, aux_cod_usuario);
                 cStmt.setString(2, aux_cod_encuesta);
                 cStmt.registerOutParameter(3, Types.INTEGER);
