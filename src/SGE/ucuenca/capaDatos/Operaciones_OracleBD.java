@@ -1196,4 +1196,35 @@ public class Operaciones_OracleBD {
         }  
     }
     
+    //Obtener registros para Tabla en VISTAS
+//    public Object[] recuperarRegistrosVISTAS() {
+//        Object[] aux_arrayList = null;
+//        
+//        try {
+//            aux_arrayList = new Object[15];
+//            cn = con.Conectar("ENCUESTA_DB", "12345");
+//            sql = cn.createStatement();
+//            selectStringQuery = "SELECT USERNAME, ACTION_NAME, EXTENDED_TIMESTAMP, RETURNCODE FROM DBA_AUDIT_SESSION";
+//            System.out.println("PRIVILEGIOS:    " + selectStringQuery);
+//            rs = sql.executeQuery(selectStringQuery);
+//
+//            int i = 0;
+//            while (rs.next()) {
+//                aux_arrayList[0] = rs.getString("USERNAME");
+//                actionRec = rs.getString("ACTION_NAME");
+//                extendTimeRec = rs.getString("EXTENDED_TIMESTAMP");
+//                codigoRec = rs.getString("RETURNCODE");
+//            }
+//
+//        } catch (SQLException ex) {
+//            int result = JOptionPane.showConfirmDialog(null, "MENSAJE: \n\n" + ex.getMessage(), "Alerta!", JOptionPane.OK_CANCEL_OPTION);
+//            if (result != 0) {
+//                System.out.println("\n=====================\n\nERROR: " + ex + "\n=====================\n");
+//            } else {
+//                System.out.println("\n=====================\n\nERROR: " + ex + "\n=====================\n");
+//            }
+//        }
+//        return aux_arrayList;
+//    }
+    
 }
