@@ -723,7 +723,9 @@ public class Operaciones_OracleBD {
             if (valorSelectRol == 1) {
                 //GRANT create session, delete any table, insert any table, select any table, update any table TO rol_encuestador;
                 System.out.println("\tROL DE ENCUESTADOR - Privilegios de Objetos");
-                String rolToTablas = "GRANT insert, delete, update, select ON USUARIO TO " + nuevoUsuario;
+                String rolToTablas = "GRANT execute any PROCEDURE TO " + nuevoUsuario;
+                rs = sql.executeQuery(rolToTablas);
+                rolToTablas = "GRANT insert, delete, update, select ON USUARIO TO " + nuevoUsuario;
                 rs = sql.executeQuery(rolToTablas);
                 rolToTablas = "GRANT insert, delete, update, select ON TIPO_ENCUESTA TO " + nuevoUsuario;
                 rs = sql.executeQuery(rolToTablas);
@@ -737,7 +739,9 @@ public class Operaciones_OracleBD {
             if (valorSelectRol == 2) {
                 //GRANT create session, insert, select TO rol_cliente;
                 System.out.println("\tROL DE CLIENTE - Privilegios de Objetos");
-                String rolToTablas = "GRANT insert, select ON RESPUESTA_TEXTO TO " + nuevoUsuario;
+                String rolToTablas = "GRANT execute any PROCEDURE TO " + nuevoUsuario;
+                rs = sql.executeQuery(rolToTablas);
+                rolToTablas = "GRANT insert, select ON RESPUESTA_TEXTO TO " + nuevoUsuario;
                 rs = sql.executeQuery(rolToTablas);
                 rolToTablas = "GRANT insert, select ON RESPUESTA_OPCION TO " + nuevoUsuario;
                 rs = sql.executeQuery(rolToTablas);
