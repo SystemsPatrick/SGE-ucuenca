@@ -1106,5 +1106,50 @@ public class Operaciones_OracleBD {
         }
     }
     
+    //Procedimiento para Validar la Cedula
+    public int proced_validacionCedula(String aux_cedula) throws ParseException {
+        
+        int valorRetorno = 0;
+        if (cn == null) {
+            System.out.println("ESTA NULL");
+        } else {
+            cn = con.Conectar("ENCUESTA_DB", "12345");
+            System.out.println("NO ESTA NULL: PROC_NO");
+            try {
+                pst = cn.prepareStatement("CALL validarCedulaUsuario(?,?)");
+                
+                pst.setString(1, aux_cedula);
+                pst.setInt(1, valorRetorno);
+                
+                
+                pst.executeUpdate();
+                System.out.println("========    Procedimiento validarCedulaUsuario ========");
+                
+                
+                //Consulta para NumRegistros
+                sql = cn.createStatement();
+                selectStringQuery = "select * from intentos_password";
+                rs = sql.executeQuery(selectStringQuery);
+                int contador_procPassword = 0;
+                while (rs.next()) {
+                    contador_procPassword++;
+                }
+                metodo_interno();
+                //Actualizar la CLave
+                pst = cn.prepareStatement("UPDATE Intentos_Password SET cod_intentosPasw = ? where cod_intentosPasw = ?");
+                pst.setInt(1, contador_procPassword);
+                pst.setInt(2, 0);
+                pst.executeUpdate();
+                
+                return valorRetorno;
+            } catch (SQLException ex) {
+                System.out.println("NOTA PROC VALIDACION::: " + ex.getMessage());
+                return 0;
+            }
+        }
+        return valorRetorno;   
+    }
+    
+    
     
 }
