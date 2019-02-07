@@ -436,6 +436,14 @@ public class jframe_ManejoEncuesta extends javax.swing.JFrame {
             if (datosRecuperados.insertarRegistros(objEncuesta)) {
                 //Mostrar Ventana Emergente
                 int result = JOptionPane.showConfirmDialog(null, "MENSAJE: \n\nRegistro Guardado", "Aviso!", JOptionPane.OK_CANCEL_OPTION);
+                
+                //Ejecutar Procedimiento ADD_DATOS_USUARIO_ENCUESTA
+                Operaciones_OracleBD var = new Operaciones_OracleBD();
+                
+            
+//                System.out.println("VALOR RETORNO: " + var.proced_add_datos_usuario_encuesta("1717226201", jTextField_cod_emcuesta1.getText()));
+            
+            
             }
             
         } catch (ParseException ex) {
