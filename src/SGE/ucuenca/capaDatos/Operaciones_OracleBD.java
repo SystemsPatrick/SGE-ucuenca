@@ -1055,7 +1055,7 @@ public class Operaciones_OracleBD {
         
         boolean valido = true;
         if (cn == null) {
-//            cn = con.Conectar("ENCUESTA_DB", "12345");
+            cn = con.Conectar("ENCUESTA_DB", "12345");
             System.out.println("ESTA NULL");
             try {
                 pst = cn.prepareStatement("CALL ENCUESTA_DB.PROCEDURE_PASSWORD(?)");
