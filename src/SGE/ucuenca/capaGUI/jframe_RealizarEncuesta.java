@@ -632,6 +632,13 @@ public class jframe_RealizarEncuesta extends javax.swing.JFrame {
         }
         //Eliminar pregunta de Jtable PREGUNTA ============================
 
+        
+        //Procedimiento de Validar Respuesta TEXTO o Numerico
+        Operaciones_OracleBD var = new Operaciones_OracleBD();
+        var.proced_validaRespuesta(String.valueOf(preguntaOpcionM), Integer.toString(intCodPregunta), jTextField_cod_usuario.getText(), jTextField_responderTexto.getText());
+        //Procedimiento de Validar Respuesta TEXTO o Numerico
+        
+        
         //Validar si esta Vacio el Jtable de PREGUNTA ===================
         if (this.jTable5.getRowCount() != 0 && this.jTable5.getSelectedRow() != 0) { // Condicion VACIO
         } else {
