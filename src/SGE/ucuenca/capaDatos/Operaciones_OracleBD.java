@@ -953,7 +953,7 @@ public class Operaciones_OracleBD {
             aux_listaCodigo = new ArrayList<String>();
             aux_arrayList = new Object[4];
             
-//            cn = con.Conectar(jframe_administrarUsuarios.getUsuario(), jframe_administrarUsuarios.getContraseña());
+            cn = con.Conectar("ENCUESTA_DB", "12345");
             String usuariosRec;
             String actionRec;
             String extendTimeRec;
@@ -989,6 +989,7 @@ public class Operaciones_OracleBD {
         }
         return aux_arrayList;
     }
+    
     //Insertar Registros Conexiones
     public boolean insertar(Object objeto) throws ParseException {
         //Datos recibidos de la capa de negocios - Instanciado la clase
